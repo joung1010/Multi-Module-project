@@ -1,0 +1,2 @@
+rootProject.name = 'multi-module'
+include 'modules:endpoint:module-core-api'
