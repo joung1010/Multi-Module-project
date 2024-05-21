@@ -104,3 +104,80 @@ exec -it mysql-container bash
 
   
   
+## 도커 컴포즈 파일 생성
+
+### **Docker Compose 파일 작성**
+
+1. **`docker-compose.yml` 파일 생성**:
+  - 프로젝트 디렉토리 내에 **`docker-compose.yml`** 파일을 생성합니다.
+2. **MySQL 서비스 정의**:
+  - **`docker-compose.yml`** 파일에 MySQL 컨테이너 설정을 추가합니다.
+
+다음은 위의 **`docker run`** 명령어를 기반으로 한 Docker Compose 파일 예시입니다:
+
+```yaml
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: 1q2w3e
+    ports:
+      - "3305:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+
+```
+
+### **`docker-compose.yml` 파일 설명**
+
+- **version**: Docker Compose 파일의 버전을 지정합니다. 최신 버전을 사용하는 것이 좋습니다.
+- **services**: 각 서비스(컨테이너)를 정의합니다. 여기서는 **`mysql`**이라는 이름으로 서비스를 정의합니다.
+  - **image**: 사용할 Docker 이미지를 지정합니다. 여기서는 **`mysql:latest`**를 사용합니다.
+  - **container_name**: 컨테이너의 이름을 지정합니다.
+  - **environment**: 환경 변수를 지정합니다. 여기서는 MySQL 루트 비밀번호를 설정합니다.
+  - **ports**: 호스트와 컨테이너 간의 포트 매핑을 설정합니다. 여기서는 호스트의 3305 포트를 컨테이너의 3306 포트로 매핑합니다.
+  - **volumes**: 데이터 볼륨을 설정하여 데이터의 영속성을 보장합니다. **`mysql-data`**라는 이름의 볼륨을 **`/var/lib/mysql`**에 마운트합니다.
+
+### **Docker Compose로 컨테이너 실행**
+
+1. **Docker Compose 파일 저장**:
+  - 위의 내용을 **`docker-compose.yml`** 파일에 저장합니다.
+2. **Docker Compose 명령어 실행**:
+  - 터미널을 열고 **`docker-compose.yml`** 파일이 있는 디렉토리로 이동합니다.
+  - 다음 명령어를 실행하여 컨테이너를 시작합니다:
+
+```
+sh코드 복사
+docker-compose up -d
+
+```
+
+이 명령어는 **`docker-compose.yml`** 파일에 정의된 서비스를 백그라운드에서 실행합니다.
+
+1. **실행 중인 컨테이너 확인**:
+
+```
+sh코드 복사
+docker ps
+
+```
+
+이 명령어를 실행하여 MySQL 컨테이너가 실행 중인지 확인할 수 있습니다.
+
+### **컨테이너 종료 및 제거**
+
+컨테이너를 종료하려면 다음 명령어를 사용합니다:
+
+```
+sh코드 복사
+docker-compose down
+
+```
+
+이 명령어는 **`docker-compose.yml`** 파일에 정의된 모든 서비스를 중지하고 컨테이너를 제거합니다. 데이터는 정의된 볼륨(**`mysql-data`**)에 저장되므로 데이터는 유지됩니다.
