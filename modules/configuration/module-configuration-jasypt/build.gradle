@@ -4,9 +4,13 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.8.0'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.8.0'
 }
-group="com.business"
+
+group = 'com.business'
+
 dependencies {
+    implementation project(':modules:configuration:module-meta-configuration')
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
@@ -16,5 +20,4 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
 

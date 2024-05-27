@@ -6,6 +6,8 @@ plugins {
 }
 group="com.business"
 dependencies {
+
+//    api project(':modules:configuration:module-configuration-jasypt')
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -16,5 +18,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-

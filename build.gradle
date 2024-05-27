@@ -34,9 +34,19 @@ subprojects {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
     }
 
     tasks.named('test') {
         useJUnitPlatform()
+    }
+    bootJar {
+        enabled = false
+    }
+
+// 기본적으로 모든 서브프로젝트에서 jar 활성화
+    jar {
+        enabled = true
     }
 }
