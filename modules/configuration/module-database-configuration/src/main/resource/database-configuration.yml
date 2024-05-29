@@ -1,0 +1,4 @@
+spring:
+  config:
+    import:
+      - database-${spring.profiles.active}-configuration.yml

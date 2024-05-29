@@ -1,0 +1,22 @@
+configuration:
+  data:
+    hikari:
+      target-database-type: mysql
+      auto-commit: true
+      connection-timeout: 3000
+      validation-timeout: 3000
+      idle-timeout: 600000
+      max-lifetime: 1800000 # Pool Connection Life Time
+      # pool sizing
+      maximum-pool-size: 10
+      minimum-idle: 2
+      # ops
+      leak-detection-threshold: 2000
+      keepalive-time: 30000
+  datasource:
+    mysql:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      prefix-host: jdbc:mysql://
+      host: ENC(ikS+L5tlE4mtz6qQ+f9ZreQsY1c7WyZAZ5vjQhcLc5pR6/dn9IhLIALz7GkX/nNs)
+      username: ENC(Ugk85/elcDtZWdvwUNngVDFaltmTYW/J)
+      password: ENC(grLACUDMaitOKKKTB4Egsv1jvynnJoN0)
