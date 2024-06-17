@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: test
+  config:
+    import:
+      - database-configuration.yml
+      - database-test-configuration.yml
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: test1234
