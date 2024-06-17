@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
  * @since 2024-05-29
  */
 
-@Component
 @Getter
 @Setter
+@Component
 @ConfigurationProperties(prefix = "configuration.data.hikari")
 public class HikariCpProperties {
     private String targetDatabaseType;

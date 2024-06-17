@@ -12,5 +12,7 @@ public class DataContents {
     public static final String DB_PROPERTY = "db-property";
     public static final String DATASOURCE = "datasource";
     public static final String TX_MANAGER = "tx-manager";
+    public static final String JDBC_TEMPLATE = "jdbc-template";
+    public static final String NM_JDBC_TEMPLATE = "nm-jdbc-template";
 }
 
