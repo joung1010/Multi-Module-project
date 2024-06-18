@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.*;
@@ -18,8 +19,11 @@ import static org.assertj.core.api.Assertions.*;
  */
 
 @Slf4j
-@SpringBootTest(classes = {HikariCpProperties.class})
+@SpringBootTest(classes = {HikariCpProperties.class,DataSourceProperties.class})
 @ConfigurationPropertiesScan("com.business.configuration")
+@ComponentScan(basePackages = {
+        "com.business.configuration.jasypt",
+})
 @ActiveProfiles("test")
 class HikariCpPropertiesTest {
     @Autowired
