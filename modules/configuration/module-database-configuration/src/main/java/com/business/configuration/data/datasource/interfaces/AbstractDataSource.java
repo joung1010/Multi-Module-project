@@ -20,6 +20,11 @@ public abstract class AbstractDataSource implements DefaultDataSource{
 
     protected DataSource createDataSource(DataSourceProperties dataSourceProperties ,
                                           HikariCpProperties hikariCpProperties) {
+        log.info("========= data source setting =========");
+        log.info("Driver Class Name: {}", dataSourceProperties.getDriverClassName());
+        log.info("JDBC URL: {}", dataSourceProperties.getPrefixHost() + dataSourceProperties.getHost());
+        log.info("Username: {}", dataSourceProperties.getUsername());
+        log.info("Password: {}", dataSourceProperties.getPassword());
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName(dataSourceProperties.getDriverClassName());
         hikariConfig.setJdbcUrl(dataSourceProperties.getPrefixHost() + dataSourceProperties.getHost());
@@ -35,6 +40,8 @@ public abstract class AbstractDataSource implements DefaultDataSource{
         hikariConfig.setMinimumIdle(hikariCpProperties.getMinimumIdle());
         hikariConfig.setLeakDetectionThreshold(hikariCpProperties.getLeakDetectionThreshold());
         hikariConfig.setKeepaliveTime(hikariCpProperties.getKeepaliveTime());
+
+        log.info("========= data source setting end =========");
         return new HikariDataSource(hikariConfig);
     }
 }

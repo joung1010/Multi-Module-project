@@ -18,6 +18,8 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j:8.1.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation project(':modules:configuration:module-configuration-jasypt')
+    testImplementation project(':modules:configuration:module-meta-configuration')
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 

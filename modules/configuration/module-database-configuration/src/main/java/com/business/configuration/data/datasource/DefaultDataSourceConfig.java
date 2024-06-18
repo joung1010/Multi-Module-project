@@ -23,7 +23,6 @@ import javax.sql.DataSource;
  */
 @RequiredArgsConstructor
 @Configuration
-//@EnableConfigurationProperties({HikariCpProperties.class, DataSourceProperties.class})
 public class DefaultDataSourceConfig extends AbstractDataSource {
 
     private final HikariCpProperties hikariCpProperties;

@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
-//@ConfigurationProperties(prefix = "configuration.data.datasource.mysql")
+@Component
+@ConfigurationProperties(prefix = "configuration.data.datasource.mysql")
 public class DataSourceProperties {
     private String driverClassName;
     private String prefixHost;
