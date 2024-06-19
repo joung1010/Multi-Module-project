@@ -2,3 +2,9 @@ spring:
   config:
     import:
       - database-${spring.profiles.active}-configuration.yml
+# P6Spy
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+    enabled: true

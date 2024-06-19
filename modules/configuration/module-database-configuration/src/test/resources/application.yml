@@ -9,3 +9,11 @@ jasypt:
   encryptor:
     bean: jasyptStringEncryptor
     password: test1234
+
+# P6Spy
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+    enabled: true
+
