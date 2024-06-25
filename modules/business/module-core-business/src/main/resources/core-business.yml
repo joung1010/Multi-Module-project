@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: module-core-business
+  profiles:
+    default: local
+    active: ${spring.profiles.default}
+  config:
+    import:
+      - database-configuration.yml
+      - jpa-configuration.yml
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: test1234

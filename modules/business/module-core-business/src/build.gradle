@@ -1,0 +1,32 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.8.0'
+}
+
+group = 'com.business'
+
+dependencies {
+    implementation project(':modules:configuration:module-meta-configuration')
+    implementation project(':modules:configuration:module-configuration-jasypt')
+    implementation project(':modules:configuration:module-database-configuration')
+    implementation project(':modules:configuration:module-jpa-configuration')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation ('com.fasterxml.jackson.core:jackson-databind')
+
+
+    runtimeOnly 'com.mysql:mysql-connector-j:8.1.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation project(':modules:configuration:module-configuration-jasypt')
+    testImplementation project(':modules:configuration:module-meta-configuration')
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+

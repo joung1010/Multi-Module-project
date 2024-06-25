@@ -4,6 +4,9 @@ spring:
   profiles:
     default: local
     active: ${spring.profiles.default}
+  config:
+    import:
+      - core-business.yml
 
 server:
   port: 18080
