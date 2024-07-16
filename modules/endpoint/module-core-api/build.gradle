@@ -6,6 +6,8 @@ plugins {
 }
 group="com.business"
 dependencies {
+    implementation project(':modules:business:module-core-business')
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
