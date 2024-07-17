@@ -43,8 +43,6 @@ public class TMemberDetailsEntity {
     @Column(name = "updated_at", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private String updated_at;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "memberDetails", cascade = CascadeType.ALL)
     private TMemberEntity member;
 }
