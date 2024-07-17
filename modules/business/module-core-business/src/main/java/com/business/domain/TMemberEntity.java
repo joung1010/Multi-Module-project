@@ -22,24 +22,24 @@ import java.time.LocalDateTime;
 public class TMemberEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", length = 50, nullable = false)
-    private String userName;
+    @Column(nullable = false, length = 50)
+    private String username;
 
-    @Column(name = "password", length = 100, nullable = false)
+    @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(name = "email", length = 100, nullable = false)
+    @Column(nullable = false, length = 100)
     private String email;
 
-    @Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "updated_at", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private TMemberDetailsEntity memberDetails;
 }

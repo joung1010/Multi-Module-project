@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * <b>  </b>
@@ -19,31 +20,31 @@ import java.time.LocalDate;
 @Table(name = "T_MEMBER_DETAILS")
 public class TMemberDetailsEntity {
     @Id
-    @Column(name = "memberId")
+    @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name = "first_name", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String lastName;
 
-    @Column(name = "phone_number", length = 20)
+    @Column(length = 20)
     private String phoneNumber;
 
-    @Column(name = "address", length = 255)
+    @Column(length = 255)
     private String address;
 
-    @Column(name = "birthdate")
     private LocalDate birthdate;
 
-    @Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private String created_at;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "updated_at", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private String updated_at;
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToOne(mappedBy = "memberDetails", cascade = CascadeType.ALL)
+    @OneToOne
+    @MapsId
     @JoinColumn(name = "member_id")
     private TMemberEntity member;
 }

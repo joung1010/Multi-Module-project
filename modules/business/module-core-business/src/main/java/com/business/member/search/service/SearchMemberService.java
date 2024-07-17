@@ -43,7 +43,7 @@ public class SearchMemberService {
 
         return MemberDetailVo.builder()
                 .memberId(tMember.getId())
-                .userName(tMember.getUserName())
+                .userName(tMember.getUsername())
                 .email(tMember.getEmail())
                 .address(tMember.getMemberDetails().getAddress())
                 .birthdate(tMember.getMemberDetails().getBirthdate())
