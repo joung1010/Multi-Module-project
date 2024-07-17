@@ -41,7 +41,5 @@ public class TMemberEntity {
     private LocalDateTime updatedAt;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @MapsId
-    @JoinColumn(name = "member_id")
     private TMemberDetailsEntity memberDetails;
 }
