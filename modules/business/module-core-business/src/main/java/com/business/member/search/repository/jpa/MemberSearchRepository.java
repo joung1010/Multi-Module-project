@@ -15,6 +15,6 @@ import org.springframework.data.repository.query.Param;
  */
 public interface MemberSearchRepository extends JpaRepository<TMemberEntity,Long> {
 
-    @Query("SELECT member FROM TMemberEntity member JOIN TMemberEntity.memberDetails memberDetail WHERE member.email = :#{cond.email} and :#{cond.password}")
+    @Query("SELECT member FROM TMemberEntity member JOIN member.memberDetails memberDetail WHERE member.email = :#{#cond.email} AND member.password = :#{#cond.password}")
     TMemberEntity findByEmailAndPassword(@Param("cond") MemberCondDto reqDto);
 }
