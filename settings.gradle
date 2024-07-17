@@ -4,4 +4,6 @@ include 'modules:configuration:module-configuration-jasypt'
 include 'modules:configuration:module-meta-configuration'
 include 'modules:configuration:module-database-configuration'
 include 'modules:configuration:module-jpa-configuration'
+include 'modules:configuration:module-test-starter'
+
 include 'modules:business:module-core-business'
