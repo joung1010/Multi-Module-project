@@ -23,13 +23,13 @@ public class TMemberDetailsEntity {
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
-    @Column(length = 20)
+    @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
     @Column(length = 255)
