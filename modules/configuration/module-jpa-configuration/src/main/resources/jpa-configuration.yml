@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      show-sql: false
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.SpringPhysicalNamingStrategy
+
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+    enabled: true
