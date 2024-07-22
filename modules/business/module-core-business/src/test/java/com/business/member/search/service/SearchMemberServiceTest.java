@@ -38,4 +38,17 @@ class SearchMemberServiceTest {
         assertEquals(id, tMember.getId());
 
     }
+
+    @Test
+    void memberSearchByEmailAndPassword() {
+        MemberCondDto memberCondDto = MemberCondDto.builder()
+                .email("john.doe@example.com")
+                .password("password123")
+                .build();
+
+        TMemberEntity byEmailAndPassword = searchRepository.findByEmailAndPassword(memberCondDto);
+        assertNotNull(byEmailAndPassword);
+
+        assertEquals(memberCondDto.getEmail(), byEmailAndPassword.getEmail());
+    }
 }
