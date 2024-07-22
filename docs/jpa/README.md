@@ -707,3 +707,17 @@ public class MemberDetails {
 4. **CascadeType.REFRESH**: 부모 엔티티를 새로고침할 때 연관된 자식 엔티티도 함께 새로고침됩니다.
 5. **CascadeType.DETACH**: 부모 엔티티를 분리할 때 연관된 자식 엔티티도 함께 분리됩니다.
 6. **CascadeType.ALL**: 위의 모든 CascadeType 옵션들을 포함합니다.
+
+#### 엔티티 상관관계에서 `fetch` 옵션
+
+JPA에서 엔티티 간의 관계를 정의할 때, 로딩 전략을 지정할 수 있는 `fetch` 옵션이 있습니다. 이 옵션은 두 가지 유형으로 나뉩니다:
+
+1. **즉시 로딩(EAGER Loading)**:
+    - `FetchType.EAGER`: 관련 엔티티를 즉시 로드합니다. 주 엔티티가 로드될 때 관련 엔티티도 함께 로드됩니다.
+    - 예를 들어, `@OneToOne(fetch = FetchType.EAGER)` 또는 `@ManyToOne(fetch = FetchType.EAGER)`와 같이 사용합니다.
+2. **지연 로딩(LAZY Loading)**:
+    - `FetchType.LAZY`: 관련 엔티티를 실제로 필요할 때 로드합니다. 주 엔티티가 로드될 때 관련 엔티티는 프록시 객체로 남아 있다가 접근할 때 로드됩니다.
+    - 예를 들어, `@OneToOne(fetch = FetchType.LAZY)` 또는 `@ManyToOne(fetch = FetchType.LAZY)`와 같이 사용합니다.
+  
+> JOIN FETCH  
+> JPA에서 페치 전략을 명시적으로 지정하여 관련 엔티티를 한 번의 쿼리로 로드하는 데 사용되는 방법입니다. 이를 통해 N+1 쿼리 문제를 해결하고 성능을 최적화할 수 있습니다.
