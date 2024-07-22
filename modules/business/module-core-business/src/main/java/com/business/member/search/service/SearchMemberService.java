@@ -3,7 +3,7 @@ package com.business.member.search.service;
 import com.business.domain.TMemberEntity;
 import com.business.member.search.model.dto.MemberCondDto;
 import com.business.member.search.model.vo.MemberDetailVo;
-import com.business.member.search.repository.jpa.MemberSearchRepository;
+import com.business.member.search.repository.jpa.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class SearchMemberService {
-    private final MemberSearchRepository memberSearchRepository;
+    private final MemberJpaRepository memberJpaRepository;
 
     public MemberDetailVo searchMemberInfo(MemberCondDto dto) {
         if (StringUtils.isAllBlank(dto.getEmail(), dto.getPassword())
@@ -34,10 +34,10 @@ public class SearchMemberService {
         }
         TMemberEntity tMember;
         if (ObjectUtils.isNotEmpty(dto.getId())) {
-            tMember = memberSearchRepository.findById(dto.getId())
+            tMember = memberJpaRepository.findById(dto.getId())
                     .orElseThrow(() -> new RuntimeException("회원 미존재"));
         } else {
-            tMember = Optional.ofNullable(memberSearchRepository.findByEmailAndPassword(dto))
+            tMember = Optional.ofNullable(memberJpaRepository.findByEmailAndPassword(dto))
                     .orElseThrow(() -> new RuntimeException("email 및 password 불일치"));
         }
 
