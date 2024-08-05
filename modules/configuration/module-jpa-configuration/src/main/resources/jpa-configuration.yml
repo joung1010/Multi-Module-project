@@ -12,3 +12,13 @@ decorator:
     p6spy:
       enable-logging: true
     enabled: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: ERROR
+        type:
+          descriptor:
+            sql:
+              BasicBinder: ERROR
