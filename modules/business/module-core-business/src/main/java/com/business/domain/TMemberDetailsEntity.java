@@ -43,8 +43,6 @@ public class TMemberDetailsEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "memberDetails")
     private TMemberEntity member;
 }

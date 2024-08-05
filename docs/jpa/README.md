@@ -259,7 +259,42 @@ JPA의 엔티티 매니저가 활성화된 상태로 트랜잭션(@Transactional
 ### **8. `@JoinColumn`**
 
 - **`@JoinColumn`** 어노테이션은 두 엔티티를 연결하는 외래 키(foreign key) 칼럼을 지정할 때 사용됩니다.
-
+1. **name**:
+   - **설명**: 데이터베이스 테이블에서 현재 엔티티의 외래 키 컬럼 이름을 지정합니다.
+   - **예시**: `@JoinColumn(name = "member_id")`
+   - **사용 사례**: 만약 현재 엔티티(`TMemberEntity`)의 테이블에 외래 키로 사용할 컬럼이 `member_id`라면, `name` 속성을 사용하여 이를 지정합니다.
+2. **referencedColumnName**:
+   - **설명**: 외래 키가 참조하는 대상 엔티티의 컬럼 이름을 지정합니다.
+   - **예시**: `@JoinColumn(name = "member_id", referencedColumnName = "id")`
+   - **사용 사례**: 외래 키가 참조하는 대상 엔티티(`TMemberDetailsEntity`)의 기본 키가 `id`라면, `referencedColumnName` 속성을 사용하여 이를 지정합니다.
+3. **table**:
+   - **설명**: 외래 키 컬럼이 있는 테이블의 이름을 지정합니다. 이 속성은 기본적으로 지정된 엔티티의 테이블로 가정됩니다.
+   - **예시**: `@JoinColumn(name = "member_id", table = "T_MEMBER_DETAILS")`
+   - **사용 사례**: 복잡한 경우에만 사용되며, 대부분의 경우 생략 가능합니다.
+4. **unique**:
+   - **설명**: 외래 키 컬럼에 대해 유니크 제약 조건을 설정할지 여부를 지정합니다.
+   - **예시**: `@JoinColumn(name = "member_id", unique = true)`
+   - **사용 사례**: 외래 키 컬럼이 유일해야 하는 경우에 사용됩니다.
+5. **nullable**:
+   - **설명**: 외래 키 컬럼이 null을 허용할지 여부를 지정합니다.
+   - **예시**: `@JoinColumn(name = "member_id", nullable = false)`
+   - **사용 사례**: 외래 키 컬럼이 null을 허용하지 않도록 할 경우에 사용됩니다.
+6. **insertable**:
+   - **설명**: 삽입 작업 시 외래 키 컬럼에 값을 삽입할 수 있는지 여부를 지정합니다.
+   - **예시**: `@JoinColumn(name = "member_id", insertable = false)`
+   - **사용 사례**: 삽입 작업 시 이 컬럼에 값을 삽입하지 않도록 할 경우에 사용됩니다.
+7. **updatable**:
+   - **설명**: 업데이트 작업 시 외래 키 컬럼을 수정할 수 있는지 여부를 지정합니다.
+   - **예시**: `@JoinColumn(name = "member_id", updatable = false)`
+   - **사용 사례**: 업데이트 작업 시 이 컬럼을 수정하지 않도록 할 경우에 사용됩니다.
+8. **columnDefinition**:
+   - **설명**: 외래 키 컬럼의 SQL 타입 정의를 지정합니다.
+   - **예시**: `@JoinColumn(name = "member_id", columnDefinition = "BIGINT UNSIGNED")`
+   - **사용 사례**: 데이터베이스의 특정 컬럼 타입을 명시적으로 지정해야 하는 경우에 사용됩니다.
+9. **foreignKey**:
+   - **설명**: JPA 2.1부터 추가된 속성으로, 외래 키 제약 조건을 정의할 수 있습니다.
+   - **예시**: `@JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "FK_MEMBER_DETAILS"))`
+   - **사용 사례**: 외래 키 제약 조건의 이름이나 기타 세부 사항을 지정할 경우에 사용됩니다.
 ### **9. `@ManyToMany`**
 
 - **`@ManyToMany`** 어노테이션은 엔티티 간의 다대다 관계를 정의할 때 사용됩니다. 이 경우, 관계를 관리하기 위한 연결 테이블이 필요합니다.
