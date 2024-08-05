@@ -2,9 +2,11 @@ package com.business.member.search.service;
 
 import com.business.domain.TMemberAddressEntity;
 import com.business.domain.TMemberEntity;
+import com.business.domain.TShippingAddress;
 import com.business.member.search.model.dto.MemberCondDto;
 import com.business.member.search.repository.jpa.MemberAddressJpaRepository;
 import com.business.member.search.repository.jpa.MemberJpaRepository;
+import com.business.member.search.repository.jpa.MemberShippingAddressJapRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,9 @@ class SearchMemberServiceTest {
 
     @Autowired
     private MemberAddressJpaRepository memberAddressJpaRepository;
+
+    @Autowired
+    private MemberShippingAddressJapRepository memberShippingAddressJapRepository;
 
     @Test
     @DisplayName("member Search By Id")
@@ -77,5 +82,26 @@ class SearchMemberServiceTest {
             log.info("member addr: {} {} {} {}",address.getAddress(),address.getCity(),address.getState(),address.getZipcode());
         });
 
+    }
+
+    @Test
+    void selectShippingAddressTest() {
+        MemberCondDto condDto = MemberCondDto.builder()
+                .id(1L)
+                .build();
+
+        List<TMemberAddressEntity> memberAddr = memberAddressJpaRepository.findByMemberId(condDto.getId());
+        TMemberAddressEntity memberAddress = memberAddr.stream()
+                .findFirst()
+                .orElse(null);
+        assertNotNull(memberAddress);
+
+        List<TShippingAddress> shippingAddresses = memberShippingAddressJapRepository.findByMemberAddressId(memberAddress.getId());
+        shippingAddresses.forEach(addr -> {
+            assertEquals(memberAddress.getId(),addr.getId());
+            assertNotNull(addr.getShippingAddress());
+            assertNotNull(addr.getShippingCity());
+            assertNotNull(addr.getShippingState());
+        });
     }
 }
