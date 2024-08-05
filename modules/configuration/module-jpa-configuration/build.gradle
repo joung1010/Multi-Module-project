@@ -16,6 +16,13 @@ dependencies {
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+    // QueryDSL 설정
+    api 'com.querydsl:querydsl-jpa'
+    api 'com.querydsl:querydsl-apt'
+    annotationProcessor 'com.querydsl:querydsl-apt'
+
+
+
     runtimeOnly 'com.mysql:mysql-connector-j:8.1.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
