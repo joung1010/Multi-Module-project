@@ -1,10 +1,12 @@
 package com.business.configuration.jpa;
 
 import com.business.configuration.data.datasource.DefaultDataSourceConfig;
+import com.business.configuration.jpa.framework.AbstractJpaDataSourceConfiguration;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -30,10 +32,14 @@ import java.util.Properties;
         transactionManagerRef = DefaultJpaConfiguration.JPA_TX_MANAGER_BEAN_NAME
 )
 @Configuration
-public class DefaultJpaConfiguration {
+public class DefaultJpaConfiguration extends AbstractJpaDataSourceConfiguration {
     public static final String JPA_ENTITY_MANAGER_FACTORY_BEAN_NAME = "jpa-entity-manager";
     public static final String JPA_TX_MANAGER_BEAN_NAME = "jpa-tx-manager";
 
+
+    public DefaultJpaConfiguration(JpaProperties jpaProperties) {
+        super(jpaProperties);
+    }
 
     @Bean(JPA_ENTITY_MANAGER_FACTORY_BEAN_NAME)
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier(DefaultDataSourceConfig.DEFAULT_DATASOURCE) DataSource dataSource) {
@@ -43,17 +49,17 @@ public class DefaultJpaConfiguration {
         em.setPackagesToScan("com.business.domain"); // JPA 엔티티가 위치한 패키지를 지정합니다.
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaVendorAdapter(jpaVendorAdapter());
         em.setPersistenceUnitName(JPA_ENTITY_MANAGER_FACTORY_BEAN_NAME);
-        em.setJpaProperties(hibernateProperties());
+        em.setJpaPropertyMap(jpaProperties.getProperties());
 
         return em;
     }
 
     @ConditionalOnBean(name = JPA_ENTITY_MANAGER_FACTORY_BEAN_NAME)
     @Bean(JPA_TX_MANAGER_BEAN_NAME)
-    public PlatformTransactionManager transactionManager(@Qualifier(JPA_ENTITY_MANAGER_FACTORY_BEAN_NAME) EntityManagerFactory entityManagerFactory) {
-        return new JpaTransactionManager(entityManagerFactory);
+    public PlatformTransactionManager jpaTransactionManager(@Qualifier(JPA_ENTITY_MANAGER_FACTORY_BEAN_NAME) EntityManagerFactory entityManagerFactory) {
+        return transactionManager(entityManagerFactory);
     }
 
     private Properties hibernateProperties() {
