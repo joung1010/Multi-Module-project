@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SearchMemberServiceTest {
     @Autowired
-    private MemberJpaRepository searchRepository;
+    private MemberJpaRepository memberJpaRepository;
 
     @Autowired
     private MemberAddressJpaRepository memberAddressJpaRepository;
@@ -43,7 +43,7 @@ class SearchMemberServiceTest {
     void memberSearchById() {
        Long id = 1L;
 
-        TMemberEntity tMember = searchRepository.findById(id)
+        TMemberEntity tMember = memberJpaRepository.findById(id)
                 .orElse(null);
         assertNotNull(tMember);
 
@@ -58,7 +58,7 @@ class SearchMemberServiceTest {
                 .password("password123")
                 .build();
 
-        TMemberEntity byEmailAndPassword = searchRepository.findByEmailAndPassword(memberCondDto);
+        TMemberEntity byEmailAndPassword = memberJpaRepository.findByEmailAndPassword(memberCondDto);
         assertNotNull(byEmailAndPassword);
 
         assertEquals(memberCondDto.getEmail(), byEmailAndPassword.getEmail());
@@ -68,7 +68,7 @@ class SearchMemberServiceTest {
     void oneToManyTestByAddress() {
         Long id = 1L;
 
-        TMemberEntity tMember = searchRepository.findById(id)
+        TMemberEntity tMember = memberJpaRepository.findById(id)
                 .orElse(null);
         assertNotNull(tMember);
 

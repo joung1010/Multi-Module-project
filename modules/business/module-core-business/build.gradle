@@ -7,6 +7,19 @@ plugins {
 
 group = 'com.business'
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src/main/java", "build/generated/sources/annotationProcessor/java/main"]
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file("$buildDir/generated/sources/annotationProcessor/java/main")
+}
+
+
 dependencies {
     implementation project(':modules:configuration:module-meta-configuration')
     implementation project(':modules:configuration:module-configuration-jasypt')
@@ -17,6 +30,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation ('com.fasterxml.jackson.core:jackson-databind')
     implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     runtimeOnly 'com.mysql:mysql-connector-j:8.1.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
