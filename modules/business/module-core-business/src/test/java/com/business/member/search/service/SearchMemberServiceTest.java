@@ -45,7 +45,7 @@ class SearchMemberServiceTest {
     @DisplayName("member Search By Id")
     void memberSearchById() {
        Long id = 1L;
-       assumeTrue(ObjectToolkits.isEmpty(id),"test Skip!!");
+       assumeTrue(ObjectToolkits.isNotEmpty(id),"test Skip!!");
 
         TMemberEntity tMember = memberRepository.findById(id)
                 .orElse(null);
@@ -61,7 +61,7 @@ class SearchMemberServiceTest {
                 .email("john.doe@example.com")
                 .password("password123")
                 .build();
-        assumeTrue(ObjectToolkits.isEmpty(memberCondDto),"test Skip!!");
+        assumeTrue(ObjectToolkits.isNotEmpty(memberCondDto),"test Skip!!");
 
         TMemberEntity byEmailAndPassword = memberRepository.findByEmailAndPassword(memberCondDto);
 
@@ -72,7 +72,7 @@ class SearchMemberServiceTest {
     @Test
     void oneToManyTestByAddress() {
         Long id = 1L;
-        assumeTrue(ObjectToolkits.isEmpty(id),"test Skip!!");
+        assumeTrue(ObjectToolkits.isNotEmpty(id),"test Skip!!");
 
         TMemberEntity tMember = memberRepository.findById(id)
                 .orElse(null);
@@ -95,7 +95,7 @@ class SearchMemberServiceTest {
         MemberCondDto condDto = MemberCondDto.builder()
                 .id(1L)
                 .build();
-        assumeTrue(ObjectToolkits.isEmpty(condDto),"test Skip!!");
+        assumeTrue(ObjectToolkits.isNotEmpty(condDto),"test Skip!!");
 
         List<TMemberAddressEntity> memberAddr = memberAddressJpaRepository.findByMemberId(condDto.getId());
         TMemberAddressEntity memberAddress = memberAddr.stream()
@@ -115,7 +115,7 @@ class SearchMemberServiceTest {
     @Test
     void selectQueryDslTest() {
         Long id = 1L;
-        assumeTrue(ObjectToolkits.isEmpty(id),"test Skip!!");
+        assumeTrue(ObjectToolkits.isNotEmpty(id),"test Skip!!");
 
         MemberInfoVo memberInfoVo = memberRepository.fetchMemberInfo(id);
 
