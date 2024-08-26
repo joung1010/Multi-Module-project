@@ -25,11 +25,11 @@ dependencies {
     implementation project(':modules:configuration:module-configuration-jasypt')
     implementation project(':modules:configuration:module-database-configuration')
     implementation project(':modules:configuration:module-jpa-configuration')
+    implementation project(':modules:configuration:module-framework-configuration')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation ('com.fasterxml.jackson.core:jackson-databind')
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
 
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"

@@ -1,5 +1,7 @@
 package com.business.member.search.service;
 
+import com.business.configuration.utils.ObjectToolkits;
+import com.business.configuration.utils.StringToolkits;
 import com.business.domain.TMemberEntity;
 import com.business.member.search.model.dto.MemberCondDto;
 import com.business.member.search.model.vo.MemberDetailVo;
@@ -27,13 +29,13 @@ public class SearchMemberService {
     private final MemberJpaRepository memberJpaRepository;
 
     public MemberDetailVo searchMemberInfo(MemberCondDto dto) {
-        if (StringUtils.isAllBlank(dto.getEmail(), dto.getPassword())
-                && ObjectUtils.isEmpty(dto.getId())) {
+        if (StringToolkits.isAllBlank(dto.getEmail(), dto.getPassword())
+                && ObjectToolkits.isEmpty(dto.getId())) {
             //TODO 예외처리 로직 추가 필요
             throw new RuntimeException("필수 값 오류");
         }
         TMemberEntity tMember;
-        if (ObjectUtils.isNotEmpty(dto.getId())) {
+        if (ObjectToolkits.isNotEmpty(dto.getId())) {
             tMember = memberJpaRepository.findById(dto.getId())
                     .orElseThrow(() -> new RuntimeException("회원 미존재"));
         } else {
