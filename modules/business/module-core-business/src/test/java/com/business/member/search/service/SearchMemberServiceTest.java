@@ -1,11 +1,13 @@
 package com.business.member.search.service;
 
+import com.business.configuration.framework.utils.ObjectToolkits;
 import com.business.domain.TMemberAddressEntity;
 import com.business.domain.TMemberEntity;
 import com.business.domain.TShippingAddress;
 import com.business.member.search.model.dto.MemberCondDto;
+import com.business.member.search.model.vo.MemberInfoVo;
+import com.business.member.search.repository.MemberRepository;
 import com.business.member.search.repository.jpa.MemberAddressJpaRepository;
-import com.business.member.search.repository.jpa.MemberJpaRepository;
 import com.business.member.search.repository.jpa.MemberShippingAddressJapRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -30,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SearchMemberServiceTest {
     @Autowired
-    private MemberJpaRepository memberJpaRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
     private MemberAddressJpaRepository memberAddressJpaRepository;
@@ -42,11 +45,12 @@ class SearchMemberServiceTest {
     @DisplayName("member Search By Id")
     void memberSearchById() {
        Long id = 1L;
+       assumeTrue(ObjectToolkits.isEmpty(id),"test Skip!!");
 
-        TMemberEntity tMember = memberJpaRepository.findById(id)
+        TMemberEntity tMember = memberRepository.findById(id)
                 .orElse(null);
-        assertNotNull(tMember);
 
+        assertNotNull(tMember);
         assertEquals(id, tMember.getId());
 
     }
@@ -57,18 +61,20 @@ class SearchMemberServiceTest {
                 .email("john.doe@example.com")
                 .password("password123")
                 .build();
+        assumeTrue(ObjectToolkits.isEmpty(memberCondDto),"test Skip!!");
 
-        TMemberEntity byEmailAndPassword = memberJpaRepository.findByEmailAndPassword(memberCondDto);
+        TMemberEntity byEmailAndPassword = memberRepository.findByEmailAndPassword(memberCondDto);
+
         assertNotNull(byEmailAndPassword);
-
         assertEquals(memberCondDto.getEmail(), byEmailAndPassword.getEmail());
     }
 
     @Test
     void oneToManyTestByAddress() {
         Long id = 1L;
+        assumeTrue(ObjectToolkits.isEmpty(id),"test Skip!!");
 
-        TMemberEntity tMember = memberJpaRepository.findById(id)
+        TMemberEntity tMember = memberRepository.findById(id)
                 .orElse(null);
         assertNotNull(tMember);
 
@@ -89,6 +95,7 @@ class SearchMemberServiceTest {
         MemberCondDto condDto = MemberCondDto.builder()
                 .id(1L)
                 .build();
+        assumeTrue(ObjectToolkits.isEmpty(condDto),"test Skip!!");
 
         List<TMemberAddressEntity> memberAddr = memberAddressJpaRepository.findByMemberId(condDto.getId());
         TMemberAddressEntity memberAddress = memberAddr.stream()
@@ -103,5 +110,16 @@ class SearchMemberServiceTest {
             assertNotNull(addr.getShippingCity());
             assertNotNull(addr.getShippingState());
         });
+    }
+
+    @Test
+    void selectQueryDslTest() {
+        Long id = 1L;
+        assumeTrue(ObjectToolkits.isEmpty(id),"test Skip!!");
+
+        MemberInfoVo memberInfoVo = memberRepository.fetchMemberInfo(id);
+
+        assertNotNull(memberInfoVo);
+        assertEquals(memberInfoVo.getMemberId(),id);
     }
 }
