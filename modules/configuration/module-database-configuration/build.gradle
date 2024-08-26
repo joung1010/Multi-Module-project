@@ -8,6 +8,7 @@ plugins {
 group = 'com.business'
 
 dependencies {
+    implementation project(':modules:configuration:module-framework-configuration')
     implementation project(':modules:configuration:module-meta-configuration')
     implementation project(':modules:configuration:module-configuration-jasypt')
 

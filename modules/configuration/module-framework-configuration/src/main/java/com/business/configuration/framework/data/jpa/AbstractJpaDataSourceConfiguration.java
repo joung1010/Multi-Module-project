@@ -1,4 +1,4 @@
-package com.business.configuration.jpa.framework;
+package com.business.configuration.framework.data.jpa;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;

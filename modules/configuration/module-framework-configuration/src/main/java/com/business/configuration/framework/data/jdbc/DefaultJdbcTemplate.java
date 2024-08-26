@@ -1,4 +1,4 @@
-package com.business.configuration.data.jdbctemplate.interfaces;
+package com.business.configuration.framework.data.jdbc;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

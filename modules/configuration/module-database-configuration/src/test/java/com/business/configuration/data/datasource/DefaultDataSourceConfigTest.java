@@ -1,8 +1,8 @@
 package com.business.configuration.data.datasource;
 
 import com.business.configuration.TestApplication;
-import com.business.configuration.data.properties.DataSourceProperties;
-import com.business.configuration.data.properties.HikariCpProperties;
+import com.business.configuration.framework.data.properties.DataSourceProperties;
+import com.business.configuration.framework.data.properties.HikariCpProperties;
 import com.business.configuration.jasypt.JasyptConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

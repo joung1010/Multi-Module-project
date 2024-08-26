@@ -1,7 +1,7 @@
-package com.business.configuration.data.datasource.interfaces;
+package com.business.configuration.framework.data.datasource;
 
-import com.business.configuration.data.properties.DataSourceProperties;
-import com.business.configuration.data.properties.HikariCpProperties;
+import com.business.configuration.framework.data.properties.DataSourceProperties;
+import com.business.configuration.framework.data.properties.HikariCpProperties;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;

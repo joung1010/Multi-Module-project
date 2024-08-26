@@ -1,4 +1,4 @@
-package com.business.configuration.data.properties;
+package com.business.configuration.framework.data.properties;
 
 import lombok.Getter;
 import lombok.Setter;

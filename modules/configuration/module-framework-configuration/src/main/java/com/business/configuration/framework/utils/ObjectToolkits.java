@@ -1,12 +1,12 @@
-package com.business.configuration.utils;
+package com.business.configuration.framework.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 /**
- * <b> CollectionToolkits </b>
+ * <b> ObjectToolkits </b>
  *
  * @author jh.park
  * @version 0.1.0
@@ -14,5 +14,5 @@ import org.springframework.util.CollectionUtils;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CollectionToolkits extends CollectionUtils {
+public class ObjectToolkits extends ObjectUtils {
 }

@@ -24,11 +24,20 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
 
     @Override
     public MemberInfoVo fetchMemberInfo(Long memberId) {
-        QTMemberEntity member = QTMemberEntity.tMemberEntity;
+//        QTMemberEntity member = QTMemberEntity.tMemberEntity;
 //        QTMemberDetailsEntity memberDetails = QTMemberDetailsEntity.tMemberDetailsEntity;
 //        QTMemberAddressEntity address = QTMemberAddressEntity.tMemberAddressEntity;
 //        QTShippingAddress shippingAddress = QTShippingAddress.tShippingAddress;
 
+/*        TMemberEntity memberResult
+                = jpaQueryFactory.selectFrom(member)
+                .join(member.memberDetails, memberDetails).fetchJoin()  // TMemberEntity와 TMemberDetailsEntity 간의 관계에 따른 조인
+                .leftJoin(address)
+                    .on(address.member.eq(member)).fetchJoin()  // TMemberEntity와 TMemberAddressEntity 간의 관계에 따른 조인
+                .leftJoin(shippingAddress)
+                    .on(shippingAddress.memberAddress.eq(address)).fetchJoin()  // TMemberAddressEntity와 TShippingAddress 간의 관계에 따른 조인
+                .where(member.id.eq(memberId))
+                .fetchOne();*/
 
         return null;
     }

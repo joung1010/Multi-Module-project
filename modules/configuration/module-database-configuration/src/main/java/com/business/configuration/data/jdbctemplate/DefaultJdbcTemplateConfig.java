@@ -2,7 +2,7 @@ package com.business.configuration.data.jdbctemplate;
 
 import com.business.configuration.data.contents.DataContents;
 import com.business.configuration.data.datasource.DefaultDataSourceConfig;
-import com.business.configuration.data.jdbctemplate.interfaces.DefaultJdbcTemplate;
+import com.business.configuration.framework.data.jdbc.DefaultJdbcTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

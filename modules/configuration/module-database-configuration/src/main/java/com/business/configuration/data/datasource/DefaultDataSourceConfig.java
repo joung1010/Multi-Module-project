@@ -1,9 +1,9 @@
 package com.business.configuration.data.datasource;
 
 import com.business.configuration.data.contents.DataContents;
-import com.business.configuration.data.datasource.interfaces.AbstractDataSource;
-import com.business.configuration.data.properties.DataSourceProperties;
-import com.business.configuration.data.properties.HikariCpProperties;
+import com.business.configuration.framework.data.datasource.AbstractDataSource;
+import com.business.configuration.framework.data.properties.DataSourceProperties;
+import com.business.configuration.framework.data.properties.HikariCpProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;

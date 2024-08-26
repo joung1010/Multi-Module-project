@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':modules:configuration:module-framework-configuration')
     implementation project(':modules:configuration:module-meta-configuration')
     implementation project(':modules:configuration:module-configuration-jasypt')
     implementation project(':modules:configuration:module-database-configuration')

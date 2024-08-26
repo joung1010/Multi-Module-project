@@ -1,8 +1,7 @@
 package com.business.configuration.jpa;
 
 import com.business.configuration.data.datasource.DefaultDataSourceConfig;
-import com.business.configuration.jpa.framework.AbstractJpaDataSourceConfiguration;
-import jakarta.persistence.EntityManager;
+import com.business.configuration.framework.data.jpa.AbstractJpaDataSourceConfiguration;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

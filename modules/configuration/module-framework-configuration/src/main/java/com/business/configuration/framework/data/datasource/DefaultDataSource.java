@@ -1,6 +1,6 @@
-package com.business.configuration.data.datasource.interfaces;
+package com.business.configuration.framework.data.datasource;
 
-import com.business.configuration.data.properties.DataSourceProperties;
+import com.business.configuration.framework.data.properties.DataSourceProperties;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
