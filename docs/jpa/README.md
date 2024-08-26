@@ -174,13 +174,140 @@ JPA의 주요 작동 흐름은 다음과 같습니다:
 **영속성 컨텍스트와 관련한 엔티티의 4가지 상태**
 
 1. 비영속(new/transient) - 엔티티 객체가 만들어져서 아직 저장되지 않은 상태로, 영속성 컨텍스트와 전혀 관계가 없는 상태
+```java
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
 
+    // Getter, Setter, Constructor
+}
+
+public class JpaLifecycleExample {
+
+    public void example(EntityManager entityManager) {
+        // 비영속 상태: new 연산자로 객체를 생성하면 비영속 상태에 있다.
+        User user = new User();
+        user.setName("John Doe");
+
+        // 이 시점에서 user는 비영속 상태에 있다.
+    }
+}
+
+```  
+  
 2. 영속(managed) - 엔티티가 영속성 컨텍스트에 저장되어, 영속성 컨텍스트가 관리할 수 있 는 상태
+```java
+public class JpaLifecycleExample {
 
+    public void example(EntityManager entityManager) {
+        // 비영속 상태: new 연산자로 객체를 생성
+        User user = new User();
+        user.setName("John Doe");
+
+        // 영속 상태: persist() 메서드를 통해 엔티티를 영속성 컨텍스트에 저장
+        entityManager.persist(user);
+
+        // 이 시점에서 user는 영속 상태에 있다.
+        // 트랜잭션이 커밋되면, insert 쿼리가 발생하여 데이터베이스에 반영된다.
+    }
+}
+
+```
 3. 준영속(detached) - 엔티티가 영속성 컨텍스트에 저장되어 있다가 분리된 상태로, 영속성 컨텍스트가 더 이상 관리하지 않는 상태
+```java
+public class JpaLifecycleExample {
 
+    public void example(EntityManager entityManager) {
+        // 영속 상태: 엔티티가 영속성 컨텍스트에 저장됨
+        User user = new User();
+        user.setName("John Doe");
+        entityManager.persist(user);
+
+        // 준영속 상태: detach() 메서드를 통해 엔티티를 준영속 상태로 만듦
+        entityManager.detach(user);
+
+        // 이 시점에서 user는 준영속 상태에 있다.
+        // 더 이상 영속성 컨텍스트에서 관리되지 않으며, 변경사항이 자동으로 반영되지 않는다.
+    }
+}
+
+```
+  
+이전에 관리했다가 현재는 관리하지 않는 상태를 개발자가 직접 제어해야하는 경우가 있을까??  
+개발자가 준영속 상태를 직접 제어해야 하는 상황이 몇 가지 존재하며, 이런 상황에서는 의도적으로 엔티티를 준영속 상태로 만들거나, 준영속 상태에서 다시 영속 상태로 전환할 필요가 있습니다.
+
+### 준영속 상태가 유용한 이유와 사용 사례
+
+1. **웹 애플리케이션의 세션 관리**:
+    - 웹 애플리케이션에서는 일반적으로 한 HTTP 요청이 트랜잭션을 시작하고, 트랜잭션이 끝나면 영속성 컨텍스트도 종료됩니다. 하지만 사용자 세션 동안 객체를 유지하고 싶을 때가 있습니다. 이때 엔티티는 준영속 상태가 됩니다.
+    - 예를 들어, 사용자 정보 수정 폼을 통해 데이터를 조회한 후, 사용자가 몇 가지 수정 작업을 수행하다가 일정 시간 후에 제출할 때, 이미 조회된 엔티티는 준영속 상태일 것입니다. 이때, 수정된 엔티티를 다시 영속성 컨텍스트에 연결하여 업데이트할 수 있습니다.
+2. **장기간 유지되는 데이터**:
+    - 영속성 컨텍스트는 일반적으로 트랜잭션 범위 내에서 유지됩니다. 그러나 트랜잭션이 끝난 후에도 데이터(엔티티)를 계속 유지하고 싶을 때가 있습니다. 이런 경우 엔티티를 영속성 컨텍스트에서 분리하여 준영속 상태로 만들고, 필요할 때 다시 영속성 컨텍스트에 연결할 수 있습니다.
+3. **병렬 작업**:
+    - 병렬로 여러 작업을 수행해야 하는 경우, 각 작업에서 동일한 엔티티를 사용하는 것이 어려울 수 있습니다. 이런 경우, 엔티티를 준영속 상태로 만들어 각 병렬 작업에서 독립적으로 처리할 수 있습니다. 필요하면, 작업이 끝난 후 병합(merge)하여 최종 결과를 영속성 컨텍스트에 다시 반영할 수 있습니다.
+4. **특정 시점에 영속성 컨텍스트에서 엔티티를 제거할 필요가 있을 때**:
+    - 대량의 엔티티를 처리할 때, 영속성 컨텍스트에 너무 많은 엔티티가 쌓이면 메모리 사용량이 증가할 수 있습니다. 이 경우, 불필요한 엔티티를 `detach()` 메서드를 사용하여 영속성 컨텍스트에서 제거함으로써 메모리 관리를 할 수 있습니다.
+5. **준영속 상태의 엔티티를 이용한 변경 관리**:
+    - 준영속 상태의 엔티티를 다시 영속성 컨텍스트에 병합(merge)하여 데이터베이스에 반영할 수 있습니다. 이는 데이터베이스 조회를 최소화하면서도 데이터 변경을 관리할 수 있게 해줍니다.
+
+### 준영속 상태에서 다시 영속 상태로 전환 (병합)
+
+준영속 상태의 엔티티를 다시 영속성 컨텍스트에 관리되게 하려면 `merge()` 메서드를 사용할 수 있습니다. 이 메서드는 준영속 상태의 엔티티를 영속성 컨텍스트에 병합하여, 데이터베이스에 변경 사항을 반영할 수 있도록 합니다.
+
+```java
+public class JpaDetachedExample {
+
+    public void example(EntityManager entityManager) {
+        // 엔티티를 영속성 컨텍스트에 저장하여 영속 상태로 만듦
+        entityManager.getTransaction().begin();
+        User user = new User();
+        user.setName("John Doe");
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
+
+        // 트랜잭션 종료 후, 엔티티는 준영속 상태가 됨
+        // 이 시점에서 entityManager는 더 이상 user를 관리하지 않음
+
+        // 준영속 상태의 엔티티를 다시 영속성 컨텍스트에 병합
+        entityManager.getTransaction().begin();
+        User mergedUser = entityManager.merge(user);
+        mergedUser.setName("Jane Doe"); // 이 변경 사항은 트랜잭션 커밋 시 DB에 반영됨
+        entityManager.getTransaction().commit();
+    }
+}
+
+```
+
+### 요약
+
+- 준영속 상태는 영속성 컨텍스트가 종료된 후에도 엔티티 객체를 유지하고자 할 때 유용합니다.
+- 웹 애플리케이션의 세션 관리, 병렬 작업, 메모리 관리 등 여러 상황에서 준영속 상태의 엔티티를 활용할 수 있습니다.
+- 필요 시, 준영속 상태의 엔티티를 `merge()` 메서드를 통해 다시 영속성 컨텍스트에 연결하여 데이터베이스에 반영할 수 있습니다.
+
+준영속 상태는 엔티티를 영속성 컨텍스트의 관리로부터 분리하여 특정 상황에서 더 유연한 데이터 처리를 가능하게 합니다.
+      
 4. 삭제(removed) - 엔티티를 영속성 컨텍스트와 데이터베이스에서 삭제
+```java
+public class JpaLifecycleExample {
 
+    public void example(EntityManager entityManager) {
+        // 영속 상태: 엔티티가 영속성 컨텍스트에 저장됨
+        User user = new User();
+        user.setName("John Doe");
+        entityManager.persist(user);
+
+        // 삭제 상태: remove() 메서드를 통해 엔티티를 삭제 상태로 만듦
+        entityManager.remove(user);
+
+        // 이 시점에서 user는 삭제 상태에 있다.
+        // 트랜잭션이 커밋되면 delete 쿼리가 발생하여 데이터베이스에서 삭제된다.
+    }
+}
+
+```
 ### **영속성 컨텍스트의 특징**
 
 1. 영속성 컨텍스트는 엔티티를 식별자 값(@Id로 테이블의 기본키와 매핑한 필드 값)으로 구분 한다. 그렇기 때문에 영속 상태는 식별자 값이 반드시 있어야 한다.
@@ -302,6 +429,111 @@ JPA의 엔티티 매니저가 활성화된 상태로 트랜잭션(@Transactional
 ### **10. `@Version`**
 
 - **`@Version`** 어노테이션은 엔티티의 버전 관리를 위해 사용됩니다. 이는 동시성 제어에 유용하며, 데이터베이스에 엔티티를 저장할 때 충돌을 방지하는 데 도움이 됩니다.
+
+## Spring Jpa
+Spring Framework, 특히 Spring Data JPA는 준영속 상태의 엔티티를 제어하고 처리하는 과정을 보다 편리하게 만들어주는 여러 가지 기능과 패턴을 제공합니다. 여기서 몇 가지 주요 기능과 패턴을 설명하겠습니다.
+
+### 1. **스프링의 `@Transactional` 어노테이션**
+
+Spring은 `@Transactional` 어노테이션을 통해 트랜잭션을 쉽게 관리할 수 있게 해줍니다. 이 어노테이션을 사용하면, 메서드가 시작될 때 트랜잭션이 시작되고, 메서드가 정상적으로 종료될 때 자동으로 커밋됩니다. 이로 인해 영속성 컨텍스트도 자동으로 관리되며, 엔티티가 트랜잭션 범위 내에서 영속 상태로 유지됩니다.
+
+예를 들어, 서비스 계층에서 엔티티를 로드하고 변경하는 로직을 간단하게 처리할 수 있습니다:
+
+```java
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Transactional
+    public void updateUser(Long userId, String newName) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setName(newName);  // 트랜잭션이 끝날 때 자동으로 변경 사항이 반영됨
+    }
+}
+
+```
+
+위 예제에서는 `@Transactional`이 적용된 메서드 내에서 엔티티가 영속 상태로 유지되며, 트랜잭션이 끝날 때 자동으로 데이터베이스에 변경 사항이 반영됩니다.
+
+### 2. **`save()` 메서드를 통한 자동 병합**
+
+Spring Data JPA에서 제공하는 `JpaRepository`의 `save()` 메서드는 준영속 상태의 엔티티를 자동으로 병합(merge)해 줍니다. 이를 통해, 준영속 상태의 엔티티를 다시 영속성 컨텍스트에 병합하고, 필요에 따라 데이터베이스에 반영할 수 있습니다.
+
+```java
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public void updateUser(Long userId, String newName) {
+        User user = new User();
+        user.setId(userId);
+        user.setName(newName);
+        userRepository.save(user);  // 자동으로 병합되어 데이터베이스에 반영됨
+    }
+}
+
+```
+
+이 메서드를 호출하면, `userRepository.save(user)`는 엔티티가 새로운 엔티티(비영속)인지, 아니면 기존 엔티티(준영속)인지에 따라 적절한 처리를 수행합니다. 준영속 상태의 엔티티라면 `merge()`를 수행하여 데이터베이스에 업데이트 쿼리를 실행하게 됩니다.
+
+### 3. **`EntityManager`의 `detach()`와 `clear()` 메서드**
+
+Spring Data JPA를 사용할 때도 필요에 따라 `EntityManager`를 직접 사용하여 엔티티를 준영속 상태로 만들 수 있습니다. 예를 들어, 특정 엔티티를 영속성 컨텍스트에서 분리하고 싶다면 `detach()` 메서드를 사용할 수 있습니다.
+
+```java
+@Service
+public class UserService {
+
+    @Autowired
+    private EntityManager entityManager;
+
+    public void detachUser(User user) {
+        entityManager.detach(user);  // 엔티티를 준영속 상태로 만듦
+    }
+
+    public void clearPersistenceContext() {
+        entityManager.clear();  // 영속성 컨텍스트를 비움
+    }
+}
+
+```
+
+`clear()` 메서드는 영속성 컨텍스트에 저장된 모든 엔티티를 준영속 상태로 만들며, 메모리 관리 측면에서 유용할 수 있습니다.
+
+### 4. **스프링의 영속성 컨텍스트 전파 옵션**
+
+Spring에서는 트랜잭션 전파 옵션을 사용하여 트랜잭션의 범위를 제어할 수 있습니다. 예를 들어, `REQUIRES_NEW` 옵션을 사용하면 기존 트랜잭션과는 별도로 새로운 트랜잭션을 시작할 수 있습니다. 이를 통해, 특정 로직에서 영속성 컨텍스트를 분리하여 처리할 수 있습니다.
+
+```java
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void saveNewTransaction(User user) {
+        userRepository.save(user);  // 새로운 트랜잭션 내에서 처리
+    }
+}
+
+```
+
+이 방식은 병렬 처리나 특정 작업이 기존 트랜잭션과 독립적으로 처리되어야 할 때 유용합니다.
+
+### 요약
+
+- **Spring의 `@Transactional`**: 트랜잭션과 영속성 컨텍스트 관리를 자동화하여 편리하게 사용 가능.
+- **`save()` 메서드**: 준영속 상태의 엔티티를 자동으로 병합하여 업데이트 처리.
+- **`EntityManager`의 `detach()`와 `clear()`**: 영속성 컨텍스트를 직접 관리하여 메모리 관리 및 엔티티 상태 제어 가능.
+- **트랜잭션 전파 옵션**: 특정 시점에 영속성 컨텍스트의 전파 범위를 제어하여 독립적인 트랜잭션 처리 가능.
+
+Spring은 이러한 다양한 기능을 통해 JPA의 준영속 상태를 더 쉽게 제어할 수 있도록 도와줍니다. 개발자는 상황에 맞게 적절한 기능을 활용하여 효율적인 데이터 관리를 수행할 수 있습니다.
+
   
 ## 엔티티 관계
 예제 테이블:
