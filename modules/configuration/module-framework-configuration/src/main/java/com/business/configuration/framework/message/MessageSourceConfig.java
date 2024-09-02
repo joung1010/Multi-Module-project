@@ -1,5 +1,6 @@
 package com.business.configuration.framework.message;
 
+import com.business.configuration.framework.utils.MessageToolkits;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -56,6 +57,8 @@ public class MessageSourceConfig {
     @Bean
     public MessageSourceAccessor messageSourceAccessor(MessageSource messageSource) {
         MessageSourceAccessor messageSourceAccessor = new MessageSourceAccessor(messageSource);
+        MessageToolkits.setOnceMessageSourceAccessor(messageSourceAccessor);
+
         return messageSourceAccessor;
     }
 
