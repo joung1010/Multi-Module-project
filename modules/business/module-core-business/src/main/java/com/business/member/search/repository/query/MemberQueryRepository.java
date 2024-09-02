@@ -11,4 +11,6 @@ import com.business.member.search.model.vo.MemberInfoVo;
  */
 public interface MemberQueryRepository {
     MemberInfoVo fetchMemberInfo(Long memberId);
+
+    MemberInfoVo fetchMemberInfoVersion2(Long memberId);
 }

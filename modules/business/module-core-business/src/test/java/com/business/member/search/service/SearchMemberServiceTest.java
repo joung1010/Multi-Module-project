@@ -122,4 +122,16 @@ class SearchMemberServiceTest {
         assertNotNull(memberInfoVo);
         assertEquals(memberInfoVo.getMemberId(),id);
     }
+
+    @Test
+    void fetchMemberInfoVersion2() {
+        Long id = 1L;
+        assumeTrue(ObjectToolkits.isNotEmpty(id),"test Skip!!");
+
+        MemberInfoVo memberInfoVo = memberRepository.fetchMemberInfoVersion2(id);
+
+        assertNotNull(memberInfoVo);
+        assertEquals(memberInfoVo.getMemberId(),id);
+        log.info("memberInfoVo {}", memberInfoVo);
+    }
 }
