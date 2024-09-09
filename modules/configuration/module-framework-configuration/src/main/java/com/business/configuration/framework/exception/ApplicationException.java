@@ -3,6 +3,7 @@ package com.business.configuration.framework.exception;
 import com.business.configuration.framework.exception.enums.BasicErrorCode;
 import com.business.configuration.framework.standard.enums.BasicResponseType;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,6 +17,7 @@ import java.io.Serial;
  * @since 2024-09-02
  */
 @Slf4j
+@Getter
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class ApplicationException extends RuntimeException {
