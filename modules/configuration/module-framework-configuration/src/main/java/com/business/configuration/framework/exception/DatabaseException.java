@@ -1,6 +1,7 @@
 package com.business.configuration.framework.exception;
 
 import com.business.configuration.framework.exception.enums.BasicErrorCode;
+import com.business.configuration.framework.utils.StringToolkits;
 
 import java.io.Serial;
 
@@ -19,10 +20,8 @@ public class DatabaseException extends ApplicationException {
         super(BasicErrorCode.DATABASE_ERROR);
     }
     public DatabaseException(String resultMessage) {
-        super(BasicErrorCode.DATABASE_ERROR, resultMessage);
+        super(BasicErrorCode.DATABASE_ERROR, StringToolkits.defaultString(resultMessage,BasicErrorCode.DATABASE_ERROR.getDescription()));
     }
 
-    public DatabaseException(Throwable t) {
-        super(BasicErrorCode.DATABASE_ERROR,t);
-    }
+
 }

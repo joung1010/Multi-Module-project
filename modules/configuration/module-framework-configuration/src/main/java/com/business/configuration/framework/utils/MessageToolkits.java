@@ -1,5 +1,6 @@
 package com.business.configuration.framework.utils;
 
+import com.business.configuration.framework.standard.enums.CommonCodeType;
 import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,27 @@ import org.springframework.stereotype.Component;
 public class MessageToolkits {
     private static MessageSourceAccessor accessor;
 
-    public static void setOnceMessageSourceAccessor(MessageSourceAccessor messageSourceAccessor) {
+    public static synchronized void setOnceMessageSourceAccessor(MessageSourceAccessor messageSourceAccessor) {
         if (ObjectToolkits.isEmpty(accessor)) {
             accessor = messageSourceAccessor;
+        }
+    }
+
+    public static String getMessage(CommonCodeType code, String ... replaceMessage) {
+        return getMessage(code.getCode(), replaceMessage);
+    }
+
+    public static String getMessage(CommonCodeType code) {
+        return getMessage(code.getCode());
+    }
+
+
+    public static String getMessage(String name, String... replaceMessage) {
+        try {
+            return accessor.getMessage(name, replaceMessage);
+        }catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
         }
     }
 

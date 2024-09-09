@@ -1,6 +1,7 @@
 package com.business.configuration.framework.exception;
 
 import com.business.configuration.framework.exception.enums.BasicErrorCode;
+import com.business.configuration.framework.utils.StringToolkits;
 
 import java.io.Serial;
 
@@ -20,10 +21,7 @@ public class AuthenticationException extends ApplicationException{
         super(BasicErrorCode.UNAUTHORIZED);
     }
     public AuthenticationException(String resultMessage) {
-        super(BasicErrorCode.UNAUTHORIZED, resultMessage);
+        super(BasicErrorCode.UNAUTHORIZED, StringToolkits.defaultString(resultMessage,BasicErrorCode.UNAUTHORIZED.getDescription()));
     }
 
-    public AuthenticationException(Throwable t) {
-        super(BasicErrorCode.UNAUTHORIZED,t);
-    }
 }

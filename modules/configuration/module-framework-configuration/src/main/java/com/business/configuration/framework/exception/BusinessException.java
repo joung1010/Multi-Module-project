@@ -1,6 +1,8 @@
 package com.business.configuration.framework.exception;
 
 import com.business.configuration.framework.exception.enums.BasicErrorCode;
+import com.business.configuration.framework.standard.enums.BasicResponseType;
+import com.business.configuration.framework.utils.StringToolkits;
 
 import java.io.Serial;
 
@@ -18,10 +20,11 @@ public class BusinessException extends ApplicationException {
     public BusinessException() {
         super(BasicErrorCode.INTERNAL_SERVER_ERROR);
     }
+    public BusinessException(BasicResponseType errorCode,String resultMessage) {
+        super(errorCode, StringToolkits.defaultString(resultMessage,errorCode.getDescription()));
+    }
     public BusinessException(String resultMessage) {
         super(BasicErrorCode.INTERNAL_SERVER_ERROR, resultMessage);
     }
-    public BusinessException(Throwable t) {
-        super(BasicErrorCode.INTERNAL_SERVER_ERROR, t);
-    }
+
 }

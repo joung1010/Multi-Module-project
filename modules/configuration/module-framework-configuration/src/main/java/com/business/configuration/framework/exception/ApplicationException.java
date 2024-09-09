@@ -1,6 +1,7 @@
 package com.business.configuration.framework.exception;
 
 import com.business.configuration.framework.exception.enums.BasicErrorCode;
+import com.business.configuration.framework.standard.enums.BasicResponseType;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,14 +22,9 @@ public class ApplicationException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 6390473997606500221L;
 
-    private final BasicErrorCode errorCode;
+    private final BasicResponseType errorCode;
     private String resultMessage;
 
-
-    public ApplicationException(BasicErrorCode errorCode, Throwable cause) {
-        super(errorCode.getDescription(), cause);
-        this.errorCode = errorCode;
-    }
 
     public ApplicationException(Throwable t) {
         super(t);

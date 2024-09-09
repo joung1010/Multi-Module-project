@@ -1,6 +1,7 @@
 package com.business.configuration.framework.exception;
 
 import com.business.configuration.framework.exception.enums.BasicErrorCode;
+import com.business.configuration.framework.utils.StringToolkits;
 
 import java.io.Serial;
 
@@ -19,10 +20,7 @@ public class AuthorizationException extends ApplicationException {
         super(BasicErrorCode.ACCESS_DENIED);
     }
     public AuthorizationException(String resultMessage) {
-        super(BasicErrorCode.ACCESS_DENIED, resultMessage);
+        super(BasicErrorCode.ACCESS_DENIED, StringToolkits.defaultString(resultMessage,BasicErrorCode.ACCESS_DENIED.getDescription()));
     }
 
-    public AuthorizationException(Throwable t) {
-        super(BasicErrorCode.ACCESS_DENIED,t);
-    }
 }
