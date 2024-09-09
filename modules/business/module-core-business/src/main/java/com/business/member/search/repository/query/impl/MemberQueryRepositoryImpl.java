@@ -94,18 +94,29 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
         QTMemberAddressEntity address = QTMemberAddressEntity.tMemberAddressEntity;
         QTShippingAddress shippingAddress = QTShippingAddress.tShippingAddress;
 
-        TMemberEntity memberResult = jpaQueryFactory
-                .selectFrom(member)
-                .join(member.memberDetails, memberDetails).fetchJoin()
-                .leftJoin(address).on(address.member.eq(member)).fetchJoin()
-                .leftJoin(shippingAddress).on(shippingAddress.memberAddress.eq(address)).fetchJoin()
+        // MemberInfo의 일부 필드를 Projections로 매핑
+        MemberInfoVo memberInfo = jpaQueryFactory
+                .select(Projections.fields(
+                        MemberInfoVo.class,
+                        member.id.as("memberId"),
+                        member.username.as("userName"),
+                        member.email.as("email"),
+                        member.password.as("password"),
+                        memberDetails.firstName.as("firstName"),
+                        memberDetails.lastName.as("lastName"),
+                        memberDetails.phoneNumber.as("phoneNumber"),
+                        memberDetails.address.as("address"),
+                        memberDetails.birthdate.as("birthdate")
+                ))
+                .from(member)
+                .join(member.memberDetails, memberDetails)
                 .where(member.id.eq(memberId))
-                .select(member)  // 소유자 엔티티를 select 절에 포함시킴
                 .fetchOne();
 
-        if (memberResult == null) {
+        if (memberInfo == null) {
             throw new RuntimeException("회원 미존재");
         }
+
 
         // Address 정보 가져오기
         List<MemberInfoVo.MemberAddress> memberAddr = jpaQueryFactory
@@ -118,7 +129,7 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
                         address.zipcode.as("zipcode")
                 ))
                 .from(address)
-                .where(address.member.eq(memberResult))
+                .where(address.member.id.eq(memberId))
                 .fetch();
 
         // Shipping Address 정보 가져오기
@@ -132,22 +143,13 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
                         shippingAddress.shippingZipcode.as("shippingZipcode")
                 ))
                 .from(shippingAddress)
-                .where(shippingAddress.memberAddress.member.eq(memberResult))
+                .join(shippingAddress.memberAddress, address)
+                .where(address.member.id.eq(memberId))
                 .fetch();
+        // MemberInfoVo에 추가 정보 세팅 후 반환
+        memberInfo.setMemberAddress(memberAddr);
+        memberInfo.setShippingAddresses(shipAddr);
 
-        // MemberInfoVo 객체 생성
-        return MemberInfoVo.builder()
-                .memberId(memberResult.getId())
-                .userName(memberResult.getUsername())
-                .email(memberResult.getEmail())
-                .password(memberResult.getPassword())
-                .firstName(memberResult.getMemberDetails().getFirstName())
-                .lastName(memberResult.getMemberDetails().getLastName())
-                .phoneNumber(memberResult.getMemberDetails().getPhoneNumber())
-                .address(memberResult.getMemberDetails().getAddress())
-                .birthdate(memberResult.getMemberDetails().getBirthdate())
-                .memberAddress(memberAddr)
-                .shippingAddresses(shipAddr)
-                .build();
+        return memberInfo;
     }
 }
