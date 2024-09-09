@@ -91,7 +91,7 @@ public class DateTimeToolkits {
 
         return Optional.ofNullable(ymd)
                 .map(date -> LocalDate.parse(date, YYYYMMDD_FORMAT))
-                .orElseThrow(() -> CoreExceptionHandler.handleUnknownException(new IllegalArgumentException(BasicErrorMessageContents.REQUIRED_PARAMETER_MISSING)));
+                .orElseThrow(() -> CoreExceptionHandler.handleApplicationException(new IllegalArgumentException(BasicErrorMessageContents.REQUIRED_PARAMETER_MISSING)));
     }
 
     public static String getCurrentStrYMDHMS() {

@@ -71,6 +71,10 @@ public class CoreExceptionHandler {
         return new AuthenticationException(message);
     }
 
+    public static ApplicationException handleApplicationException(Throwable exception) {
+        return new ApplicationException(exception);
+    }
+
     public static ApplicationException handleUnknownException(Throwable exception) {
         log.error("Unknown exception occurred: {}", exception.getMessage(), exception);
         return new ApplicationException(exception);

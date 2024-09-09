@@ -31,6 +31,6 @@ public class ApplicationException extends RuntimeException {
     public ApplicationException(Throwable t) {
         super(t);
         errorCode = BasicErrorCode.INTERNAL_SERVER_ERROR;
-        resultMessage = errorCode.getDescription();
+        resultMessage = t.getMessage();
     }
 }
