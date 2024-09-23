@@ -32,6 +32,19 @@ public class CoreExceptionHandler {
         return new BusinessException(enumClass, message);
     }
 
+    public static <E extends Enum<E> & BasicResponseType> BadRequestException handleBadRequestException(E enumClass
+            , String... replaceMessage) {
+
+        String message = MessageToolkits.getMessage(enumClass, replaceMessage);
+        return new BadRequestException(enumClass, message);
+    }
+
+    public static <E extends Enum<E> & BasicResponseType> BadRequestException handleBadRequestException(E enumClass) {
+
+        String message = MessageToolkits.getMessage(enumClass);
+        return new BadRequestException(enumClass, message);
+    }
+
     public static <E extends Enum<E> & BasicResponseType> DatabaseException handleDatabaseException(E enumClass
             , String... replaceMessage) {
 
