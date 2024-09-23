@@ -2,14 +2,15 @@ rootProject.name = 'multi-module'
 include 'modules:endpoint:module-core-api'
 
 //configuration
-include 'modules:configuration:module-configuration-jasypt'
-include 'modules:configuration:module-meta-configuration'
-include 'modules:configuration:module-database-configuration'
-include 'modules:configuration:module-jpa-configuration'
-include 'modules:configuration:module-framework-configuration'
+include ':modules:configuration:module-configuration-jasypt'
+include ':modules:configuration:module-meta-configuration'
+include ':modules:configuration:module-database-configuration'
+include ':modules:configuration:module-jpa-configuration'
+include ':modules:configuration:module-framework-configuration'
 
 
 // test
-include 'modules:configuration:module-test-starter'
+include ':modules:configuration:module-test-starter'
 
-include 'modules:business:module-core-business'
+include ':modules:business:module-core-business'
+include ':modules:endpoint:module-core-api'
