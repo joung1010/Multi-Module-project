@@ -24,7 +24,7 @@ dependencies {
     // QueryDSL 설정
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 
-    runtimeOnly 'com.mysql:mysql-connector-j:8.1.0'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.29'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation project(':modules:configuration:module-configuration-jasypt')
