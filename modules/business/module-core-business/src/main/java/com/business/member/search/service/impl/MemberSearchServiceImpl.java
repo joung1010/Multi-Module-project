@@ -1,13 +1,18 @@
-package com.business.member.search.service;
+package com.business.member.search.service.impl;
 
+import com.business.configuration.framework.exception.enums.BasicErrorCode;
+import com.business.configuration.framework.exception.handler.CoreExceptionHandler;
 import com.business.configuration.framework.utils.ObjectToolkits;
 import com.business.configuration.framework.utils.StringToolkits;
 import com.business.domain.TMemberEntity;
 import com.business.member.search.model.dto.MemberCondDto;
 import com.business.member.search.model.vo.MemberDetailVo;
-import com.business.member.search.repository.jpa.MemberJpaRepository;
+import com.business.member.search.model.vo.MemberInfoVo;
+import com.business.member.search.repository.MemberRepository;
+import com.business.member.search.service.MemberSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,10 +28,21 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class SearchMemberService {
-    private final MemberJpaRepository memberJpaRepository;
+public class MemberSearchServiceImpl implements MemberSearchService {
+    private final MemberRepository memberRepository;
 
-    public MemberDetailVo searchMemberInfo(MemberCondDto dto) {
+    @Override
+    public MemberInfoVo findMemberDetailByMemberId(@NotNull MemberCondDto dto) {
+
+        if (ObjectToolkits.isEmpty(dto.getId())) {
+            throw CoreExceptionHandler.handleBadRequestException(BasicErrorCode.INVALID_INPUT_VALUE);
+        }
+
+        return memberRepository.fetchMemberInfoVersion2(dto.getId());
+    }
+
+    @Override
+    public MemberDetailVo searchMemberInfoVersion1(MemberCondDto dto) {
         if (StringToolkits.isAllBlank(dto.getEmail(), dto.getPassword())
                 && ObjectToolkits.isEmpty(dto.getId())) {
             //TODO 예외처리 로직 추가 필요
@@ -34,10 +50,10 @@ public class SearchMemberService {
         }
         TMemberEntity tMember;
         if (ObjectToolkits.isNotEmpty(dto.getId())) {
-            tMember = memberJpaRepository.findById(dto.getId())
+            tMember = memberRepository.findById(dto.getId())
                     .orElseThrow(() -> new RuntimeException("회원 미존재"));
         } else {
-            tMember = Optional.ofNullable(memberJpaRepository.findByEmailAndPassword(dto))
+            tMember = Optional.ofNullable(memberRepository.findByEmailAndPassword(dto))
                     .orElseThrow(() -> new RuntimeException("email 및 password 불일치"));
         }
 

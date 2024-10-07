@@ -1,5 +1,7 @@
 package com.business.member.search.repository.query.impl;
 
+import com.business.configuration.framework.exception.enums.BasicErrorCode;
+import com.business.configuration.framework.exception.handler.CoreExceptionHandler;
 import com.business.configuration.framework.utils.CollectionToolkits;
 import com.business.configuration.framework.utils.ObjectToolkits;
 import com.business.domain.*;
@@ -42,7 +44,7 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
                 .fetchOne();
 
         if (ObjectToolkits.isEmpty(memberResult)) {
-            throw new RuntimeException("회원 미존재");
+            throw CoreExceptionHandler.handleDatabaseException(BasicErrorCode.RESOURCE_NOT_FOUND);
         }
 
         List<MemberInfoVo.MemberAddress> memberAddr = jpaQueryFactory.selectFrom(address)
@@ -114,7 +116,7 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
                 .fetchOne();
 
         if (memberInfo == null) {
-            throw new RuntimeException("회원 미존재");
+            throw CoreExceptionHandler.handleDatabaseException(BasicErrorCode.RESOURCE_NOT_FOUND);
         }
 
 
