@@ -7,6 +7,7 @@ plugins {
 group="com.business"
 dependencies {
     implementation project(':modules:business:module-core-business')
+    implementation project(':modules:configuration:module-framework-configuration')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA 사용 시
