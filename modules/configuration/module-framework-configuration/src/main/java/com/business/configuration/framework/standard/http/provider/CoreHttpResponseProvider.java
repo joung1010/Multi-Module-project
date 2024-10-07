@@ -1,8 +1,10 @@
 package com.business.configuration.framework.standard.http.provider;
 
+import com.business.configuration.framework.exception.enums.BasicErrorCode;
 import com.business.configuration.framework.standard.enums.BasicResponseType;
 import com.business.configuration.framework.standard.http.CoreHttpResponseEntity;
 import com.business.configuration.framework.standard.http.body.CoreHttpResponseBodyEntity;
+import com.business.configuration.framework.utils.MessageToolkits;
 
 /**
  * <b> CoreHttpResponseBuilder </b>
@@ -26,4 +28,21 @@ public class CoreHttpResponseProvider<T> {
                 .status(errorResponseType.getHttpStatus())
                 .build();
     }
+
+    public static <T> CoreHttpResponseEntity<?> responseSuccess(T body) {
+
+        CoreHttpResponseBodyEntity<T> responseBody = CoreHttpResponseBodyEntity.<T>builder()
+                .body(body)
+                .resultCode(BasicErrorCode.SUCCESS.getCode())
+                .resultMessage(MessageToolkits.getMessage(BasicErrorCode.SUCCESS.getCode()))
+                .build();
+
+        return CoreHttpResponseEntity.<CoreHttpResponseBodyEntity<T>>builder()
+                .body(responseBody)
+                .status(BasicErrorCode.SUCCESS.getHttpStatus())
+                .build();
+    }
+
+
+
 }
