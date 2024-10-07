@@ -1,5 +1,6 @@
 package com.business.endpoint.member.service;
 
+import com.business.endpoint.member.model.dto.MemberInfoSearchDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,4 +17,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class CoreMemberApiService {
+    public MemberInfoSearchDto.Response searchMemberInfo(MemberInfoSearchDto.Request reqDto) {
+        return null;
+    }
 }

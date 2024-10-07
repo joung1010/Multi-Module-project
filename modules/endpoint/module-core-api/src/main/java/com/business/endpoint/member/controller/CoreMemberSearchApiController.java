@@ -1,6 +1,10 @@
 package com.business.endpoint.member.controller;
 
+import com.business.configuration.framework.exception.enums.BasicErrorCode;
 import com.business.configuration.framework.standard.http.CoreHttpResponseEntity;
+import com.business.configuration.framework.standard.http.body.CoreHttpResponseBodyEntity;
+import com.business.configuration.framework.standard.http.provider.CoreHttpResponseProvider;
+import com.business.configuration.framework.utils.MessageToolkits;
 import com.business.endpoint.member.model.dto.MemberInfoSearchDto;
 import com.business.endpoint.member.service.CoreMemberApiService;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +30,10 @@ public class CoreMemberSearchApiController {
     private final CoreMemberApiService searchService;
 
     @GetMapping("/search")
-    public CoreHttpResponseEntity<MemberInfoSearchDto.Response> searchMemberInfo(MemberInfoSearchDto.Request reqDto) {
-        return null;
+    public CoreHttpResponseEntity searchMemberInfo(CoreHttpResponseBodyEntity<MemberInfoSearchDto.Request> reqDto) {
+
+        MemberInfoSearchDto.Response response = searchService.searchMemberInfo(reqDto.getBody());
+        return CoreHttpResponseProvider.responseSuccess(response);
     }
 
 }
