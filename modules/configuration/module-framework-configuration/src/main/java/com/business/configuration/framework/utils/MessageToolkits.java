@@ -1,15 +1,13 @@
 package com.business.configuration.framework.utils;
 
 import com.business.configuration.framework.standard.enums.CommonCodeType;
-import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Comment;
-import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.stereotype.Component;
+
+import java.util.Locale;
 
 /**
  * <b> MessageToolkits </b>
@@ -29,7 +27,7 @@ public class MessageToolkits {
         }
     }
 
-    public static String getMessage(CommonCodeType code, String ... replaceMessage) {
+    public static String getMessage(CommonCodeType code, String... replaceMessage) {
         return getMessage(code.getCode(), replaceMessage);
     }
 
@@ -40,9 +38,12 @@ public class MessageToolkits {
 
     public static String getMessage(String name, String... replaceMessage) {
         try {
-            return accessor.getMessage(name, replaceMessage);
-        }catch (Exception e) {
-            log.error(e.getMessage(), e);
+            // 명시적으로 Locale 설정 (테스트 시 변경 가능)
+            Locale locale = LocaleContextHolder.getLocale();
+            log.info("Current locale: {}", locale);
+            return accessor.getMessage(name, replaceMessage, locale);
+        } catch (Exception e) {
+            log.error("Error retrieving message for key {}: {}", name, e.getMessage(), e);
             return null;
         }
     }

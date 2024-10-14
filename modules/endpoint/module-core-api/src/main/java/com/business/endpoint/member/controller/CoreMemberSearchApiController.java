@@ -1,6 +1,8 @@
 package com.business.endpoint.member.controller;
 
 import com.business.configuration.framework.exception.enums.BasicErrorCode;
+import com.business.configuration.framework.exception.handler.CoreExceptionHandler;
+import com.business.configuration.framework.exception.handler.RestApiController;
 import com.business.configuration.framework.standard.http.CoreHttpResponseEntity;
 import com.business.configuration.framework.standard.http.body.CoreHttpResponseBodyEntity;
 import com.business.configuration.framework.standard.http.provider.CoreHttpResponseProvider;
@@ -23,17 +25,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequiredArgsConstructor
-@RestController
+@RestApiController
 @RequestMapping("/api/core/member/v1")
 public class CoreMemberSearchApiController {
 
     private final CoreMemberApiService searchService;
 
     @GetMapping("/search")
-    public CoreHttpResponseEntity searchMemberInfo(CoreHttpResponseBodyEntity<MemberInfoSearchDto.Request> reqDto) {
+    public CoreHttpResponseEntity searchMemberInfo(MemberInfoSearchDto.Request reqDto) {
 
-        MemberInfoSearchDto.Response response = searchService.searchMemberInfo(reqDto.getBody());
-        return CoreHttpResponseProvider.responseSuccess(response);
+        MemberInfoSearchDto.Response response = searchService.searchMemberInfo(reqDto);
+        throw CoreExceptionHandler.handleUnknownException(BasicErrorCode.INTERNAL_SERVER_ERROR);
+//        return CoreHttpResponseProvider.responseSuccess(response);
     }
 
 }

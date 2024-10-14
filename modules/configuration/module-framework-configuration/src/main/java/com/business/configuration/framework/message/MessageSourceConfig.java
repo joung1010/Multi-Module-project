@@ -32,24 +32,28 @@ public class MessageSourceConfig {
     @Bean
     public MessageSource messageSource() throws IOException {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-
         List<String> basenames = new ArrayList<>();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
-        // 패턴에 맞는 메시지 파일들을 모든 모듈에서 찾아 추가
+        // 모든 모듈의 messages*.properties 파일 탐색
         Resource[] resources = resolver.getResources(RESOURCE_CLASS_PATH);
 
         for (Resource resource : resources) {
             String uri = resource.getURI().toString();
-            // 파일 경로에서 'classpath:' 이후의 부분을 추출
-            String baseName = uri.substring(uri.indexOf("/classes/") + "/classes/".length(), uri.lastIndexOf(".properties"));
+            log.info("===== Loaded message file: {}", uri);
+
+            // 파일명에서 확장자와 경로를 제외한 부분만 추출 (messages_ko, messages_en 등)
+            String baseName = uri.substring(uri.lastIndexOf('/') + 1, uri.lastIndexOf('.'));
+
+            // classpath 경로로 추가 (확장자 제외)
             basenames.add("classpath:" + baseName);
         }
 
+        // 모든 베이스네임들을 설정 (확장자가 없어야 한다)
         messageSource.setBasenames(basenames.toArray(new String[0]));
         messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setCacheSeconds(3600);  // 캐시 기간 설정 (단위: 초)
-        messageSource.setDefaultLocale(Locale.ENGLISH);
+        messageSource.setCacheSeconds(3600);  // 캐시 비활성화
+        messageSource.setDefaultLocale(Locale.KOREA);
 
         return messageSource;
     }
