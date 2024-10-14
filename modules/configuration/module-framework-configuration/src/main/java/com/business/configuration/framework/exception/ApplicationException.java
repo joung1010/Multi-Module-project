@@ -18,7 +18,6 @@ import java.io.Serial;
  */
 @Slf4j
 @Getter
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class ApplicationException extends RuntimeException {
     @Serial
@@ -27,6 +26,11 @@ public class ApplicationException extends RuntimeException {
     private final BasicResponseType errorCode;
     private String resultMessage;
 
+    public ApplicationException(BasicResponseType errorCode, String resultMessage) {
+        super(resultMessage);
+        this.errorCode = errorCode;
+        this.resultMessage = resultMessage;
+    }
 
     public ApplicationException(Throwable t) {
         super(t);

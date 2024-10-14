@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum BasicErrorCode implements BasicResponseType {
     // 200 Success
-    SUCCESS(HttpStatus.OK,"0000","성공"),
+    SUCCESS(HttpStatus.OK,"COMMON-000","성공"),
 
     // 400 BAD REQUEST
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "COMMON-001", "잘못된 입력입니다."),
