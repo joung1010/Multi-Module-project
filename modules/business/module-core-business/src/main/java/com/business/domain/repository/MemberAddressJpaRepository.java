@@ -1,4 +1,4 @@
-package com.business.member.search.repository.jpa;
+package com.business.domain.repository;
 
 import com.business.domain.TMemberAddressEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

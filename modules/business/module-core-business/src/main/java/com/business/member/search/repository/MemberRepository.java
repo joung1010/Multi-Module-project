@@ -1,6 +1,6 @@
 package com.business.member.search.repository;
 
-import com.business.member.search.repository.jpa.MemberJpaRepository;
+import com.business.domain.repository.MemberJpaRepository;
 import com.business.member.search.repository.query.MemberQueryRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
