@@ -2,6 +2,7 @@ package com.business.configuration.jpa;
 
 import com.business.configuration.data.datasource.DefaultDataSourceConfig;
 import com.business.configuration.framework.data.jpa.AbstractJpaDataSourceConfiguration;
+import com.business.configuration.repository.impl.CoreHibernateJpaRepositoryImpl;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +27,8 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(
         basePackages = {"com.business.**.repository"}, // JPA 리포지토리가 위치한 패키지를 지정합니다.
         entityManagerFactoryRef =DefaultJpaConfiguration.JPA_ENTITY_MANAGER_FACTORY_BEAN_NAME,
-        transactionManagerRef = DefaultJpaConfiguration.JPA_TX_MANAGER_BEAN_NAME
+        transactionManagerRef = DefaultJpaConfiguration.JPA_TX_MANAGER_BEAN_NAME,
+        repositoryBaseClass = CoreHibernateJpaRepositoryImpl.class
 )
 @Configuration
 public class DefaultJpaConfiguration extends AbstractJpaDataSourceConfiguration {
