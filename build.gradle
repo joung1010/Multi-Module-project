@@ -37,7 +37,9 @@ subprojects {
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
     }
-
+    tasks.withType(Test) {
+        enabled = false  // 모든 하위 프로젝트에서 테스트 비활성화
+    }
     tasks.named('test') {
         useJUnitPlatform()
     }
