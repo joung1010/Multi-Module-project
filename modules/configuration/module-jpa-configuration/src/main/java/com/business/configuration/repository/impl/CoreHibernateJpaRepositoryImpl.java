@@ -34,10 +34,10 @@ public class CoreHibernateJpaRepositoryImpl<T, ID>
 
     private final JpaEntityInformation<T, ?> entityInformation;
 
-    public CoreHibernateJpaRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
-        super(domainClass, entityManager);
+    public CoreHibernateJpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+        super(entityInformation, entityManager);
+        this.entityInformation = entityInformation;
         this.entityManager = entityManager;
-        this.entityInformation = JpaEntityInformationSupport.getEntityInformation(domainClass, entityManager);
     }
 
 
