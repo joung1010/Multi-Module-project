@@ -1,5 +1,6 @@
 package com.business.domain.repository;
 
+import com.business.configuration.repository.CoreHibernateJpaRepository;
 import com.business.domain.TShippingAddress;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,6 +13,6 @@ import java.util.List;
  * @version 0.1.0
  * @since 2024-08-05
  */
-public interface MemberShippingAddressJapRepository extends JpaRepository<TShippingAddress, Long> {
+public interface MemberShippingAddressJapRepository extends CoreHibernateJpaRepository<TShippingAddress, Long> {
     List<TShippingAddress> findByMemberAddressId(Long addressId);
 }

@@ -4,11 +4,12 @@ import com.business.configuration.framework.utils.ObjectToolkits;
 import com.business.domain.TMemberAddressEntity;
 import com.business.domain.TMemberEntity;
 import com.business.domain.TShippingAddress;
+import com.business.domain.repository.MemberJpaRepository;
 import com.business.member.search.model.dto.MemberCondDto;
 import com.business.member.search.model.vo.MemberInfoVo;
-import com.business.member.search.repository.MemberRepository;
 import com.business.domain.repository.MemberAddressJpaRepository;
 import com.business.domain.repository.MemberShippingAddressJapRepository;
+import com.business.member.search.repository.query.MemberQueryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,13 +34,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SearchMemberServiceTest {
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberJpaRepository memberRepository;
 
     @Autowired
     private MemberAddressJpaRepository memberAddressJpaRepository;
 
     @Autowired
     private MemberShippingAddressJapRepository memberShippingAddressJapRepository;
+
+    @Autowired
+    private MemberQueryRepository queryRepository;
 
     @Test
     @DisplayName("member Search By Id")
@@ -117,7 +121,7 @@ class SearchMemberServiceTest {
         Long id = 1L;
         assumeTrue(ObjectToolkits.isNotEmpty(id),"test Skip!!");
 
-        MemberInfoVo memberInfoVo = memberRepository.fetchMemberInfo(id);
+        MemberInfoVo memberInfoVo = queryRepository.fetchMemberInfo(id);
 
         assertNotNull(memberInfoVo);
         assertEquals(memberInfoVo.getMemberId(),id);
@@ -128,7 +132,7 @@ class SearchMemberServiceTest {
         Long id = 1L;
         assumeTrue(ObjectToolkits.isNotEmpty(id),"test Skip!!");
 
-        MemberInfoVo memberInfoVo = memberRepository.fetchMemberInfoVersion2(id);
+        MemberInfoVo memberInfoVo = queryRepository.fetchMemberInfoVersion2(id);
 
         assertNotNull(memberInfoVo);
         assertEquals(memberInfoVo.getMemberId(),id);

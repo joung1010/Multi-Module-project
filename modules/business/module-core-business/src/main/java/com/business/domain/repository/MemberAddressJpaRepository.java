@@ -1,5 +1,6 @@
 package com.business.domain.repository;
 
+import com.business.configuration.repository.CoreHibernateJpaRepository;
 import com.business.domain.TMemberAddressEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,6 +13,6 @@ import java.util.List;
  * @version 0.1.0
  * @since 2024-07-22
  */
-public interface MemberAddressJpaRepository extends JpaRepository<TMemberAddressEntity,Long> {
+public interface MemberAddressJpaRepository extends CoreHibernateJpaRepository<TMemberAddressEntity,Long> {
     List<TMemberAddressEntity> findByMemberId(Long memberId);
 }
