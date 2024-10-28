@@ -9,7 +9,7 @@ import com.business.member.search.model.dto.MemberCondDto;
 import com.business.member.search.model.vo.MemberInfoVo;
 import com.business.domain.repository.MemberAddressJpaRepository;
 import com.business.domain.repository.MemberShippingAddressJapRepository;
-import com.business.member.search.repository.query.MemberQueryRepository;
+import com.business.member.search.repository.MemberQueryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

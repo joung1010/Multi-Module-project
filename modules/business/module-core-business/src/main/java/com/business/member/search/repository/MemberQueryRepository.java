@@ -1,4 +1,4 @@
-package com.business.member.search.repository.query;
+package com.business.member.search.repository;
 
 import com.business.member.search.model.vo.MemberInfoVo;
 

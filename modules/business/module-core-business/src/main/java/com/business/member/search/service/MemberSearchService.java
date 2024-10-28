@@ -5,7 +5,7 @@ import com.business.configuration.framework.exception.handler.CoreExceptionHandl
 import com.business.configuration.framework.utils.ObjectToolkits;
 import com.business.member.search.model.dto.MemberCondDto;
 import com.business.member.search.model.vo.MemberInfoVo;
-import com.business.member.search.repository.query.MemberQueryRepository;
+import com.business.member.search.repository.MemberQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;

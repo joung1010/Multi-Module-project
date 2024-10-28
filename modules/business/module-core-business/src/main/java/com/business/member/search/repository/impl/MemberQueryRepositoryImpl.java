@@ -1,12 +1,11 @@
-package com.business.member.search.repository.query.impl;
+package com.business.member.search.repository.impl;
 
 import com.business.configuration.framework.exception.enums.BasicErrorCode;
 import com.business.configuration.framework.exception.handler.CoreExceptionHandler;
-import com.business.configuration.framework.utils.CollectionToolkits;
 import com.business.configuration.framework.utils.ObjectToolkits;
 import com.business.domain.*;
 import com.business.member.search.model.vo.MemberInfoVo;
-import com.business.member.search.repository.query.MemberQueryRepository;
+import com.business.member.search.repository.MemberQueryRepository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
