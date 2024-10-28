@@ -1,5 +1,6 @@
 package com.business.configuration.repository.impl;
 
+import com.business.configuration.framework.utils.ObjectToolkits;
 import com.business.configuration.repository.CoreHibernateJpaRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -123,8 +124,8 @@ public class CoreHibernateJpaRepositoryImpl<T, ID>
     @Transactional
     public <S extends T> S update(S entity) {
 
-        Session session = entityManager.unwrap(Session.class);
-        session.update(entity);
+        Session session = session();
+        session.merge(entity);
 
         return entity;
     }
@@ -142,15 +143,15 @@ public class CoreHibernateJpaRepositoryImpl<T, ID>
     @Override
     @Transactional
     public <S extends T> List<S> updateAll(Iterable<S> entities) {
+        return executeBatch(() -> {
+            List<S> result = new ArrayList<>();
+            for (S entity : entities) {
+                result.add(update(entity));
+            }
 
-        List<S> result = new ArrayList<>();
-        Session session = entityManager.unwrap(Session.class);
-        for (S entity : entities) {
-            session.update(entity);
-            result.add(entity);
-        }
-
-        return result;
+            this.entityManager.flush();
+            return result;
+        });
     }
 
     @Override
@@ -166,20 +167,16 @@ public class CoreHibernateJpaRepositoryImpl<T, ID>
 
     protected Integer getBatchSize(Session session) {
 
-        SessionFactoryImplementor sessionFactory = session
+        SessionFactoryImplementor sessionFactory
+                = session
                 .getSessionFactory()
                 .unwrap(SessionFactoryImplementor.class);
 
-        final JdbcServices jdbcServices = sessionFactory
-                .getServiceRegistry()
-                .getService(JdbcServices.class);
-
+        final JdbcServices jdbcServices = sessionFactory.getServiceRegistry().getService(JdbcServices.class);
         if (!jdbcServices.getExtractedMetaDataSupport().supportsBatchUpdates()) {
             return Integer.MIN_VALUE;
         }
-        return session
-                .unwrap(AbstractSharedSessionContract.class)
-                .getConfiguredJdbcBatchSize();
+        return session.unwrap(AbstractSharedSessionContract.class).getConfiguredJdbcBatchSize();
     }
 
     protected <R> R executeBatch(Supplier<R> callback) {
@@ -188,9 +185,10 @@ public class CoreHibernateJpaRepositoryImpl<T, ID>
         Integer originalSessionBatchSize = session.getJdbcBatchSize();
 
         try {
-            if (jdbcBatchSize == null) {
+            if (ObjectToolkits.isEmpty(jdbcBatchSize)) {
                 session.setJdbcBatchSize(10);
             }
+
             return callback.get();
         } finally {
             session.setJdbcBatchSize(originalSessionBatchSize);
