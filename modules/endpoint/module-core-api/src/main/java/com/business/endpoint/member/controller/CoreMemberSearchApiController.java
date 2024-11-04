@@ -4,11 +4,16 @@ import com.business.configuration.framework.exception.enums.BasicErrorCode;
 import com.business.configuration.framework.exception.handler.CoreExceptionHandler;
 import com.business.configuration.framework.exception.handler.RestApiController;
 import com.business.configuration.framework.standard.http.CoreHttpResponseEntity;
+import com.business.configuration.framework.standard.http.body.CoreHttpResponseBodyEntity;
+import com.business.configuration.framework.standard.http.provider.CoreHttpResponseProvider;
+import com.business.configuration.framework.standard.validation.annoation.ValidId;
 import com.business.endpoint.member.model.dto.MemberInfoSearchDto;
 import com.business.endpoint.member.service.CoreMemberApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -20,19 +25,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Slf4j
+@Validated
 @RequiredArgsConstructor
 @RestApiController
-@RequestMapping("/api/core/member/v1")
+@RequestMapping("/api/core/{version}/member")
 public class CoreMemberSearchApiController {
 
     private final CoreMemberApiService searchService;
 
-    @GetMapping("/search")
-    public CoreHttpResponseEntity searchMemberInfo(MemberInfoSearchDto.Request reqDto) {
+    @GetMapping("/{memberId}")
+    public CoreHttpResponseBodyEntity<MemberInfoSearchDto.Response> searchMemberInfo(@ValidId @PathVariable("memberId") String memberId) {
 
+        MemberInfoSearchDto.Request reqDto = MemberInfoSearchDto.Request.builder()
+                .id(Long.parseLong(memberId))
+                .build();
         MemberInfoSearchDto.Response response = searchService.searchMemberInfo(reqDto);
-        throw CoreExceptionHandler.handleUnknownException(BasicErrorCode.INTERNAL_SERVER_ERROR);
-//        return CoreHttpResponseProvider.responseSuccess(response);
-    }
 
+        return CoreHttpResponseProvider.responseSuccess(response);
+    }
 }

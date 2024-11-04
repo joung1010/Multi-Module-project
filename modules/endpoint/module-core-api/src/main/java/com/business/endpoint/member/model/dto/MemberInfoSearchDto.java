@@ -17,6 +17,7 @@ public class MemberInfoSearchDto {
 
     @Getter
     @Setter
+    @Builder
     public static class Request {
         private Long id;
     }
