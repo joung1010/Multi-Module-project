@@ -29,20 +29,15 @@ public class CoreHttpResponseProvider<T> {
                 .build();
     }
 
-    public static <T> CoreHttpResponseEntity<?> responseSuccess(T body) {
+    public static <T> CoreHttpResponseBodyEntity<T> responseSuccess(T body) {
 
-        CoreHttpResponseBodyEntity<T> responseBody = CoreHttpResponseBodyEntity.<T>builder()
+        return CoreHttpResponseBodyEntity.<T>builder()
                 .body(body)
                 .resultCode(BasicErrorCode.SUCCESS.getCode())
                 .resultMessage(MessageToolkits.getMessage(BasicErrorCode.SUCCESS.getCode()))
                 .build();
 
-        return CoreHttpResponseEntity.<CoreHttpResponseBodyEntity<T>>builder()
-                .body(responseBody)
-                .status(BasicErrorCode.SUCCESS.getHttpStatus())
-                .build();
     }
-
 
 
 }
