@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Validated
 @RequiredArgsConstructor
 @RestApiController
-@RequestMapping("/api/core/{version}/member")
+@RequestMapping("/api/core/{version}/members")
 public class CoreMemberSearchApiController {
 
     private final CoreMemberApiService searchService;
