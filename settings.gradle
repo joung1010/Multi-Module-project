@@ -5,6 +5,7 @@ include ':modules:configuration:module-meta-configuration'
 include ':modules:configuration:module-database-configuration'
 include ':modules:configuration:module-jpa-configuration'
 include ':modules:configuration:module-framework-configuration'
+include ':modules:configuration:module-configuration-redis'
 // test
 include ':modules:configuration:module-test-starter'
 //business

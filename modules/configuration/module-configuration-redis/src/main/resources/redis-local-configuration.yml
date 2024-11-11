@@ -1,0 +1,12 @@
+configuration:
+  data:
+    redis:
+      host: localhost
+      port: 6739
+      password:
+      timeout: 2000
+      cluster:
+        enabled: false
+        nodes:
+          - localhost:6380
+          - localhost:6381
