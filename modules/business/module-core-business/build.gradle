@@ -18,6 +18,7 @@ dependencies {
     implementation project(':modules:configuration:module-database-configuration')
     implementation project(':modules:configuration:module-jpa-configuration')
     implementation project(':modules:configuration:module-framework-configuration')
+    implementation project(':modules:configuration:module-configuration-redis')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'

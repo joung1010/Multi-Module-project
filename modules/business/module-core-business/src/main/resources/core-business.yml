@@ -8,6 +8,7 @@ spring:
     import:
       - database-configuration.yml
       - jpa-configuration.yml
+      - redis-configuration.yml
 
 jasypt:
   encryptor:
