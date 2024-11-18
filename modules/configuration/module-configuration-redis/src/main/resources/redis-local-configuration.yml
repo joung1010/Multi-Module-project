@@ -2,7 +2,7 @@ configuration:
   data:
     redis:
       host: localhost
-      port: 6739
+      port: 6379
       password:
       timeout: 2000
       cluster:
