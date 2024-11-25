@@ -10,3 +10,37 @@ configuration:
         nodes:
           - localhost:6380
           - localhost:6381
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      redis-circuit-breaker:
+        # 실패 10% 이상 시 서킷 오픈
+        failure-rate-threshold: 10
+        # 500ms 이상 소요 시 실패로 간주
+        slow-call-duration-threshold: 500ms
+        # slowCallDurationThreshold 초과 비율이 10% 이상 시 서킷 오픈
+        slow-call-rate-threshold: 10
+        # OPEN -> HALF-OPEN 전환 전 기다리는 시간
+        wait-duration-in-open-state: 30000
+        # 집계에 필요한 최소 호출 수
+        minimum-number-of-calls: 20
+        # 서킷 CLOSE 상태에서 N회 호출 도달 시 failureRateThreshold 실패 비율 계산
+        sliding-window-size: 100
+        # HALF_OPEN -> CLOSE or OPEN 으로 판단하기 위해 호출 횟수
+        permitted-number-of-calls-in-half-open-state: 30
+        # 무시되어야 하는 예외(화이트리스트) 즉, 재시도 되지 않아야 할 에러 클래스 리스트 (기본값: empty)
+        ignore-exceptions:
+          - com.business.configuration.redis.exception.RedisNotFoundException
+  timelimiter:
+    instances:
+      redis-time-limiter:
+        # 500ms 이상 소요 시 fail 처리
+        timeout-duration: 500ms
+  retry:
+    instances:
+      redis-retry:
+        # 재시도 사이 간격
+        wait-duration: 1000
+        # 재시도 횟수(최초 호출 포함)
+        max-attempts: 10
