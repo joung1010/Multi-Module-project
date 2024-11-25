@@ -10,9 +10,9 @@ dependencies {
     implementation project(':modules:configuration:module-framework-configuration')
 
     implementation 'io.lettuce.core:lettuce-core'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    api 'org.springframework.boot:spring-boot-starter-data-redis'
     api "io.github.resilience4j:resilience4j-spring-boot3:${resilience4jVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
