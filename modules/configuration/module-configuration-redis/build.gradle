@@ -4,16 +4,20 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.8.0'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.8.0'
 }
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+}
+
 group="com.business"
 dependencies {
 
     implementation project(':modules:configuration:module-framework-configuration')
 
-    implementation 'io.lettuce.core:lettuce-core'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-    api 'org.springframework.boot:spring-boot-starter-data-redis'
-    api "io.github.resilience4j:resilience4j-spring-boot3:${resilience4jVersion}"
+    api "io.github.resilience4j:resilience4j-spring-boot3:2.0.2"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
