@@ -5,7 +5,7 @@ import com.business.domain.QTMemberDetailsEntity;
 import com.business.domain.QTMemberEntity;
 import com.business.domain.QTShippingAddress;
 import com.business.member.redis.model.MemberRedisAddressVo;
-import com.business.member.redis.model.MemberRedisInfoEntity;
+import com.business.member.redis.model.entity.MemberRedisInfoEntity;
 import com.business.member.redis.model.MemberRedisShippingAddressVo;
 import com.business.member.redis.repository.MemberRedisQueryRepository;
 import com.querydsl.core.types.Projections;

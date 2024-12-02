@@ -1,7 +1,7 @@
 package com.business.member.redis.repository;
 
 import com.business.member.redis.model.MemberRedisAddressVo;
-import com.business.member.redis.model.MemberRedisInfoEntity;
+import com.business.member.redis.model.entity.MemberRedisInfoEntity;
 import com.business.member.redis.model.MemberRedisShippingAddressVo;
 
 import java.util.List;

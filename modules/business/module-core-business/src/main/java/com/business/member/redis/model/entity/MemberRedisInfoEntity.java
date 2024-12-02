@@ -1,8 +1,10 @@
-package com.business.member.redis.model;
+package com.business.member.redis.model.entity;
 
 import com.business.configuration.redis.utils.generator.RedisKeyGenerator;
-import com.business.member.search.model.vo.MemberInfoVo;
+import com.business.member.redis.model.MemberRedisAddressVo;
+import com.business.member.redis.model.MemberRedisShippingAddressVo;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
@@ -19,6 +21,7 @@ import java.util.List;
 
 
 @Getter
+@Setter
 @RedisHash(value = MemberRedisInfoEntity.HASH_KEY)
 public class MemberRedisInfoEntity implements Serializable {
     public static final String HASH_KEY = "MEMBER_INFO";
@@ -40,4 +43,11 @@ public class MemberRedisInfoEntity implements Serializable {
     }
 
     public void setId(String id) {}
+
+    public void setMemberAddressInfo(List<MemberRedisAddressVo> address
+            , List<MemberRedisShippingAddressVo> shipAddress) {
+
+    }
+
+
 }
