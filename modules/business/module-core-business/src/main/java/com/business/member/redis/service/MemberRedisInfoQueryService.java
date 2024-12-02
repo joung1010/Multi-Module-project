@@ -28,7 +28,8 @@ public class MemberRedisInfoQueryService {
     public MemberRedisInfoEntity findById(Long id) {
         log.info("Redis 회원 조회 ==> {}", id);
 
-        String redisKey = RedisKeyGenerator.generateCacheKey(MemberRedisInfoEntity.HASH_KEY, String.valueOf(id));
+        String redisKey = RedisKeyGenerator.generateKey(MemberRedisInfoEntity.HASH_KEY, String.valueOf(id));
+        log.info("Redis 회원 조회 Key ==> {}", redisKey);
 
         return repository.findById(redisKey)
                 .orElseThrow(RedisNotFoundException::new);
