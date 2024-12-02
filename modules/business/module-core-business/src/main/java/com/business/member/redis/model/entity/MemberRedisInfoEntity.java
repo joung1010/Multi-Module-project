@@ -5,6 +5,7 @@ import com.business.member.redis.model.MemberRedisAddressVo;
 import com.business.member.redis.model.MemberRedisShippingAddressVo;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
@@ -27,6 +28,8 @@ public class MemberRedisInfoEntity implements Serializable {
     public static final String HASH_KEY = "MEMBER_INFO";
     private static final long serialVersionUID = -4605894674165584009L;
 
+    @Id
+    private String id;
     private Long memberId;
     private String userName;
     private String email;
